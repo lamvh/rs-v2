@@ -10,9 +10,14 @@
 
 - MongoDB
 
+- Typescript
+
 #### Library
 
 - xlsx
+
+- express
+
 
 
 ### Author
