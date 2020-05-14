@@ -1,6 +1,6 @@
 import express from "express";
 import { connect } from "./utils/mongo";
-import { syncMongoDb } from "../src/xlsxToDb/sync";
+import { syncMongoDb } from "./syncXLSXToDb/sync";
 const app = express();
 const port = process.env.PORT || 1000;
 
