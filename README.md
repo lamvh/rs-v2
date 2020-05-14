@@ -39,21 +39,21 @@
 
 - Raw data: `http://insideairbnb.com/amsterdam/`
 
-- DB on Mongodb Cloud: `mongodb+srv://<user>:<password>@rs-cb-noxe8.gcp.mongodb.net/test?retryWrites=true&w=majority`
+- DB on Mongodb Cloud: `mongodb+srv://<user>:<password>@rs-cb-noxe8.gcp.mongodb.net/<database-name>?retryWrites=true&w=majority`
 
 ## Data Structure
 
-1. listings
+1. listings: 19700 documents
 
-2. neighborhoods
+2. neighborhoods: 22 documents
 
-3. reviews
+3. reviews: 494880 documents
 
-4. reviewsDetail
+4. reviewsDetail: 494880 documents
 
-5. listingsDetail
+5. listingsDetail: 19700 documents
 
-6. calendarDetail
+6. calendarDetail: 1048575 documents
 
 ### listings
 
