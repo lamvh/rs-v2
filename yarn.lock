@@ -23,10 +23,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@types/bluebird@3.5.30":
-  version "3.5.30"
-  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.30.tgz#ee034a0eeea8b84ed868b1aa60d690b08a6cfbc5"
-  integrity sha512-8LhzvcjIoqoi1TghEkRMkbbmM+jhHnBokPGkJWjclMK+Ks0MxEBow3/p2/iFTZ+OIbJHQDSfpgdZEb+af3gfVw==
+"@types/bluebird@3.5.31":
+  version "3.5.31"
+  resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.31.tgz#d17fa0ec242b51c3db302481c557ce3813bf45cb"
+  integrity sha512-0PKlnDIxOh3xJHwJpVONR2PP11LhdM+QYiLJGLIbzMqRwLAPxN6lQar2RpdRhfIEh/HjVMgMdhHWJA0CgC5X6w==
 
 "@types/body-parser@*":
   version "1.19.0"
@@ -74,7 +74,7 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.1.tgz#dc488842312a7f075149312905b5e3c0b054c79d"
   integrity sha512-FwI9gX75FgVBJ7ywgnq/P7tw+/o1GUbtP0KzbtusLigAOgIgNISRK0ZPl4qertvXSIE8YbsVJueQ90cDt9YYyw==
 
-"@types/mongodb@*", "@types/mongodb@3.5.16":
+"@types/mongodb@*":
   version "3.5.16"
   resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.16.tgz#b39b2e4873a5f399aa2a9027baeca542d0d76ebe"
   integrity sha512-q12k9vFEGfQTUTC9KiN+Lf1nPpEawuPyTfIHBgGn+lSD/4ICZhePxQqEe/ukRgAjS63vdc+Td758VBr4bUGNjg==
@@ -82,10 +82,18 @@
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/mongoose@5.7.19":
-  version "5.7.19"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.7.19.tgz#b1d9fcc0096211e5f6a0fb142fbcd81230082629"
-  integrity sha512-KIROeMK8nB5Z4Mi5QaZ5ypByoXNf+V31tYTdHtFayo/hvqHhxM8PCS+IDRma9X3aFRU0gvQWlZLJxR6VGPTVew==
+"@types/mongodb@3.5.17":
+  version "3.5.17"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.5.17.tgz#ada9f38076fb6182b23293af029afb83f4dc8c3d"
+  integrity sha512-pxpy5MIaEZ4Hmc8ijwVXCGYkWgs6w22whNwHmivbNi6NHWMxlR+QzIGeVGTCqfRcJKO6FuaJOYJ4vnYvz/VXAQ==
+  dependencies:
+    "@types/bson" "*"
+    "@types/node" "*"
+
+"@types/mongoose@5.7.20":
+  version "5.7.20"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.7.20.tgz#faf65445ebc9632f7e9eb5d1cf93b80fb93002cf"
+  integrity sha512-s9zTkj3rTaeS16VcNCUAYsO/SS5ePEcnWmX0SrvzpuHGngtL54zXbVwS7LhTwNFXNrlTVgzhnYp9kgGwFvftVg==
   dependencies:
     "@types/mongodb" "*"
     "@types/node" "*"

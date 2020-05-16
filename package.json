@@ -6,16 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
-    "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/app.ts"
+    "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/bluebird": "3.5.30",
+    "@types/bluebird": "3.5.31",
     "@types/express": "4.17.6",
-    "@types/mongodb": "3.5.16",
-    "@types/mongoose": "5.7.19",
+    "@types/mongodb": "3.5.17",
+    "@types/mongoose": "5.7.20",
     "@types/xlsx": "0.0.36",
     "ts-node-dev": "1.0.0-pre.44",
     "tslint": "6.1.2",
