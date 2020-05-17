@@ -1,4 +1,4 @@
-export type listings = {
+export type listing = {
   _id: string;
   id: number;
   name: string;
