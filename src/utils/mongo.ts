@@ -100,3 +100,18 @@ export const syncDataToMongoCloudV2 = async (
     }
   }
 };
+
+export const getDataByCollection = async (opt: {
+  collection: string;
+  limit?: number;
+}) => {
+  const limit = opt.limit ?? 1000000;
+
+  const col = await collection(opt.collection);
+
+  const data = col.find().limit(limit).toArray();
+  if (!data || (await data).length === 0) {
+    return;
+  }
+  return data;
+};
