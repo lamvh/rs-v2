@@ -1,11 +1,11 @@
 import { syncMongoDb } from "./syncXLSXToDb/sync";
 import { connect } from "./utils/mongo";
-import a from "./app";
+import { contentBased } from "./algorithm/contentBased";
 
-const server = () => {
-  a();
-  connect();
+const server = async () => {
+  await connect();
   syncMongoDb();
+  await contentBased();
 };
 
 server();

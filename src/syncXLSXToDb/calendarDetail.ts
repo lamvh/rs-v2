@@ -1,9 +1,9 @@
 import { getRawDataFromXLSX } from "../utils/xlsx";
 import {
-  collection,
   syncDataToMongoCloud,
   syncDataToMongoCloudV2,
-} from "../utils/mongo";
+} from "../utils/syncData";
+import { collection } from "../utils/getData";
 
 export const syncCalendarDetailToMongoDB = async () => {
   const collectionName = "calendarDetails";
