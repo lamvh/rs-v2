@@ -3,17 +3,13 @@ import Bluebird, { each } from "bluebird";
 
 let database: mongoose.Connection;
 
-export const connect = (): Promise<mongoose.Connection> => {
+export const connect = async (): Promise<mongoose.Connection> => {
   const uri = process.env.MONGO_URI;
 
   if (!uri) {
     console.error("No MONGO_URI config");
     throw Error("No MONGO_URI config");
   }
-
-  // if (database) {
-  //   throw Error("Do not exist Database");
-  // }
 
   try {
     mongoose.connect(uri, {
@@ -47,18 +43,34 @@ export const disconnect = () => {
   mongoose.disconnect();
 };
 
-export const collection = async (collectionName: string) => {
+export const syncCollection = async (collectionName: string) => {
+  console.log("starting sync collection", collectionName);
   const connection = await connect();
-  await connection.dropCollection(collectionName);
 
+  if (connection.collection(collectionName)) {
+    await connection.dropCollection(collectionName);
+  }
   await connection.createCollection(collectionName);
 
-  const collection = connection.collection(collectionName);
+  const collectionConnected = connection.collection(collectionName);
 
-  if (!collection) {
-    console.log("Can not connect to", collectionName, "collecion");
+  if (!collectionConnected) {
+    console.log("Can not connect to", collectionName, "collection");
   }
-  return collection;
+  return collectionConnected;
+};
+
+export const collection = async (
+  collectionName: string
+): Promise<mongoose.Collection> => {
+  const connection = await connect();
+  const collectionConnected = connection.collection(collectionName);
+
+  if (!collectionConnected) {
+    console.log("Can not connect to", collectionName, "collection");
+  }
+
+  return collectionConnected;
 };
 
 export const syncDataToMongoCloud = async (

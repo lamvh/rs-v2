@@ -1,10 +1,10 @@
-import { collection, syncDataToMongoCloudV2 } from "../utils/mongo";
+import { syncCollection, syncDataToMongoCloudV2 } from "../utils/mongo";
 import { getRawDataFromXLSX } from "../utils/xlsx";
 
 export const syncListingDetailToMongoDBV2 = async () => {
   const collectionName = "listingDetails";
 
-  const col = await collection(collectionName);
+  const col = await syncCollection(collectionName);
 
   const data = await getRawDataFromXLSX({
     fileName: "listingsDetail",
@@ -13,5 +13,5 @@ export const syncListingDetailToMongoDBV2 = async () => {
 
   await syncDataToMongoCloudV2(data, col);
 
-  console.log("Listing Done");
+  console.log("Listing Detail Done");
 };
