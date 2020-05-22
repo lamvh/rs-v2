@@ -1,8 +1,8 @@
 export enum collectionsEnum {
-  calendarDetail = "calendarDetail",
+  calendarDetail = "calendarDetailV2",
   reviews = "review",
-  reviewsDetail = "reviewsDetail",
+  reviewsDetail = "reviewDetails",
   listings = "listings",
-  listingsDetail = "listingsDetail",
+  listingsDetail = "listingDetails",
   neighbourhoods = "neighbourhoods",
 }

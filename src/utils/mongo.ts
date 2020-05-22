@@ -18,22 +18,21 @@ export const connect = async (): Promise<mongoose.Connection> => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
+
+    database = mongoose.connection;
+    database.once("open", async () => {
+      console.info("Connected to database at", uri);
+    });
+
+    database.on("error", () => {
+      console.error("Error connecting to database");
+    });
+
+    return database;
   } catch (error) {
     console.log(error);
     throw error;
   }
-
-  database = mongoose.connection;
-
-  database.once("open", async () => {
-    console.info("Connected to database at", uri);
-  });
-
-  database.on("error", () => {
-    console.error("Error connecting to database");
-  });
-
-  return database;
 };
 
 export const disconnect = () => {
