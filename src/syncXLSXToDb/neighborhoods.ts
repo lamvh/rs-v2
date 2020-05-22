@@ -1,5 +1,6 @@
-import { syncCollection, syncDataToMongoCloud } from "../utils/mongo";
+import { syncCollection } from "../utils/mongo";
 import { getRawDataFromXLSX } from "../utils/xlsx";
+import { syncDataToMongoCloud } from "../utils/syncData";
 
 export const syncNeighborhoodsToMongoDB = async () => {
   const collectionName = "neighbourhoods";

@@ -3,18 +3,18 @@ import mongoose from "mongoose";
 
 export const syncDataToMongoCloud = async (
   data: any[],
-  collection: mongoose.Collection,
+  collectionConnected: mongoose.Collection,
   delay: number
 ) => {
   await Promise.all(
     await each(data, async (row, index) => {
       try {
         console.log(index + 1, "/", data.length);
-        await collection.insertOne(row);
+        await collectionConnected.insertOne(row);
       } catch (error) {
         let count = 1;
         while (count < 5) {
-          await collection.insertOne(row);
+          await collectionConnected.insertOne(row);
           console.log("Retry insert", count, "time");
           count = count + 1;
         }
@@ -26,15 +26,15 @@ export const syncDataToMongoCloud = async (
 
 export const syncDataToMongoCloudV2 = async (
   data: any[],
-  collection: mongoose.Collection
+  collectionConnected: mongoose.Collection
 ) => {
   try {
     console.log(data.length);
-    await collection.insertMany(data);
+    await collectionConnected.insertMany(data);
   } catch (error) {
     let count = 1;
     while (count < 5) {
-      await collection.insertMany(data);
+      await collectionConnected.insertMany(data);
       console.log("Retry insert", count, "time");
       count = count + 1;
     }

@@ -1,5 +1,6 @@
-import { syncCollection, syncDataToMongoCloudV2 } from "../utils/mongo";
+import { syncCollection } from "../utils/mongo";
 import { getRawDataFromXLSX } from "../utils/xlsx";
+import { syncDataToMongoCloudV2 } from "../utils/syncData";
 
 export const syncReviewDetailToMongoDBV2 = async () => {
   const collectionName = "reviewDetails";
