@@ -6,16 +6,6 @@ const ContentBasedRecommender = require("content-based-recommender");
 
 const limit = 1000;
 
-const getListingDetailData = async (): Promise<any[]> => {
-  const data = await getDataByCollection({
-    collection: collectionsEnum.listings,
-  });
-
-  console.log(data.length);
-
-  return data;
-};
-
 const trainData = async (data: any[]) => {
   const recommender = new ContentBasedRecommender({
     minScore: 0.1,
@@ -30,6 +20,8 @@ const trainData = async (data: any[]) => {
 };
 
 export const contentBased = async () => {
-  const data = await getListingDetailData();
-  await trainData(data);
+  const data = await getDataByCollection({
+    collection: collectionsEnum.reviews,
+  });
+  // await trainData(data);
 };

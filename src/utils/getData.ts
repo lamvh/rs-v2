@@ -1,6 +1,4 @@
-import mongoose from "mongoose";
 import { connect, collection } from "./mongo";
-import { collectionsEnum } from "../types/enum";
 
 export const getDataByCollection = async (opt: {
   collection: string;
@@ -8,11 +6,14 @@ export const getDataByCollection = async (opt: {
 }) => {
   console.log("Get data from collection", opt.collection);
   try {
-    const collectionConnector = await collection(opt.collection);
-    const data = await collectionConnector
-      .find()
-      .limit(+opt.collection ?? 100)
-      .toArray();
+    const data = await (await collection(opt.collection)).find().toArray();
+
+    if (!data) {
+      console.log("no data");
+    }
+
+    console.log("found ", data.length, "document");
+    console.log("example", data[0]);
 
     return data;
   } catch (error) {

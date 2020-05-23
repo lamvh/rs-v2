@@ -4,7 +4,7 @@ import { collectionsEnum } from "../types/enum";
 import { collection } from "../utils/mongo";
 
 export const syncCalendarToMongoDBV2 = async () => {
-  const collectionName = collectionsEnum.calendar;
+  const collectionName = collectionsEnum.calendars;
 
   const col = await collection(collectionName);
 
