@@ -6,6 +6,7 @@ const server = async () => {
   await connect();
   // a();
   // await syncMongoDb();
+  await contentBased();
 };
 
 server();

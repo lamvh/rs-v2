@@ -8,7 +8,7 @@ const limit = 1000;
 
 const getListingDetailData = async (): Promise<any[]> => {
   const data = await getDataByCollection({
-    collection: collectionsEnum.calendarDetail,
+    collection: collectionsEnum.listings,
   });
 
   console.log(data.length);
@@ -31,6 +31,5 @@ const trainData = async (data: any[]) => {
 
 export const contentBased = async () => {
   const data = await getListingDetailData();
-  console.log(data);
-  // await trainData(data);
+  await trainData(data);
 };
