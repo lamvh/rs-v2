@@ -1,4 +1,4 @@
-export type calendarDetail = {
+export type calendar = {
   _id: string;
   listing_id: number;
   date: string;
