@@ -53,7 +53,7 @@
 
 5. listingsDetail: 19700 documents
 
-6. calendarDetail: 1048575 documents
+6. calendar: 1048575 documents
 
 ### listings
 
@@ -224,7 +224,7 @@
 - calculated_host_listings_count_shared_rooms
 - reviews_per_month
 
-### calendarDetail
+### calendar
 
 - listing_id
 - date
