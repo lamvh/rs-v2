@@ -1,4 +1,4 @@
 /node_modules
-/static
+/static/xlsx/*
 /dist
 *.local

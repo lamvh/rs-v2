@@ -3,10 +3,11 @@ import {
   syncDataToMongoCloud,
   syncDataToMongoCloudV2,
 } from "../utils/syncData";
-import { collection } from "../utils/getData";
+import { collectionsEnum } from "../types/enum";
+import { collection } from "../utils/mongo";
 
 export const syncCalendarDetailToMongoDB = async () => {
-  const collectionName = "calendarDetails";
+  const collectionName = collectionsEnum.calendarDetail;
 
   const col = await collection(collectionName);
 

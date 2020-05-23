@@ -10,7 +10,7 @@ import { syncReviewToMongoDBV2 } from "./reviews";
 
 export const syncMongoDb = async () => {
   // await syncNeighborhoodsToMongoDB();
-  // await syncCalendarDetailToMongoDBV2();
+  await syncCalendarDetailToMongoDBV2();
   // await syncListingToMongoDBV2();
   // await syncListingDetailToMongoDBV2();
   // await syncReviewDetailToMongoDBV2();

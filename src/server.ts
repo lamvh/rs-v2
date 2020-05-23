@@ -5,8 +5,8 @@ import { contentBased } from "./algorithm/contentBased";
 const server = async () => {
   await connect();
   // a();
-  // await syncMongoDb();
-  await contentBased();
+  await syncMongoDb();
+  // await contentBased();
 };
 
 server();
