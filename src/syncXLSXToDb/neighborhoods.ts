@@ -1,6 +1,6 @@
 import { syncCollection } from "../utils/mongo";
 import { getRawDataFromXLSX } from "../utils/xlsx";
-import { syncDataToMongoCloud } from "../utils/syncData";
+import { syncDataToMongoCloudV2 } from "../utils/syncData";
 
 export const syncNeighborhoodsToMongoDB = async () => {
   const collectionName = "neighbourhoods";
@@ -11,7 +11,7 @@ export const syncNeighborhoodsToMongoDB = async () => {
     sheetName: "neighbourhoods",
   });
 
-  await syncDataToMongoCloud(data, col, 100);
+  await syncDataToMongoCloudV2(data!, col);
 
   console.log("Neighbourhood Done !");
 };

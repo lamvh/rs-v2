@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Bluebird, { each } from "bluebird";
 
 let database: mongoose.Connection;
 
