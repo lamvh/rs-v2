@@ -11,7 +11,7 @@ export const syncNeighborhoodsToMongoDB = async () => {
     sheetName: "neighbourhoods",
   });
 
-  await syncDataToMongoCloud(data, col, 100);
+  await syncDataToMongoCloud(data!, col, 100);
 
   console.log("Neighbourhood Done !");
 };

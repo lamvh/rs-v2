@@ -16,13 +16,18 @@ export const getRawDataFromXLSX = async (opt: {
   try {
     if (!fs.existsSync(fileDir)) {
       console.log("Not found file", fileDir);
-      return;
+      return [];
     }
 
     const wb = xlsx.readFile(fileDir);
     const data = xlsx.utils.sheet_to_json(wb.Sheets[opt.sheetName]);
 
     console.info("!!! Processed", opt.fileName, "xlsx", data.length, "rows");
+
+    if (!data || data.length === 0) {
+      console.log("Empty data from excel");
+      return [];
+    }
 
     return data;
   } catch (error) {

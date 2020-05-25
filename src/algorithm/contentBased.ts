@@ -1,4 +1,4 @@
-import { getDataByCollection } from "../utils/getData";
+import { getDataByCollection, getDataFromJSON } from "../utils/getData";
 import { collectionsEnum } from "../types/enum";
 
 // tslint:disable-next-line: no-var-requires
@@ -20,8 +20,7 @@ const trainData = async (data: any[]) => {
 };
 
 export const contentBased = async () => {
-  const data = await getDataByCollection({
-    collection: collectionsEnum.reviews,
-  });
+  const data = await getDataFromJSON("calendars");
+
   // await trainData(data);
 };

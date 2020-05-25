@@ -1,4 +1,6 @@
-import { connect, collection } from "./mongo";
+import { collection } from "./mongo";
+import fs from "fs";
+import path from "path";
 
 export const getDataByCollection = async (opt: {
   collection: string;
@@ -19,4 +21,25 @@ export const getDataByCollection = async (opt: {
   } catch (error) {
     throw error;
   }
+};
+
+export const getDataFromJSON = async (fileName: string) => {
+  const dir = path.join(
+    process.cwd(),
+    process.env.JSON_OUTPUT_DIR!,
+    `${fileName}.json`
+  );
+  console.log("Reading data from JSON file", dir);
+
+  const rawData = fs.readFileSync(dir, "utf8");
+
+  if (!rawData) {
+    console.log("Empty data from JSON file", dir);
+    return [];
+  }
+  const data = JSON.parse(rawData);
+
+  console.log(data);
+
+  return data;
 };
