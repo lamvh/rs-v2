@@ -21,6 +21,7 @@ const trainData = async (data: any[]) => {
 };
 
 export const contentBased = async () => {
+<<<<<<< HEAD
   // const data = await getDataFromJSON("calendars");
   const data = await getDataFromJSON("reviewDetails");
 
@@ -28,4 +29,9 @@ export const contentBased = async () => {
     .slice(1, 1000)
     .map((row: any) => ({ id: row.id, content: row.comments }));
   await trainData(a);
+=======
+  const data = await getDataFromJSON("calendars");
+
+  // await trainData(data);
+>>>>>>> a0d153c2de0daa33fb1e9c4de2d0c5ee0d0e5823
 };
