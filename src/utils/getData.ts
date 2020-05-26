@@ -23,23 +23,23 @@ export const getDataByCollection = async (opt: {
   }
 };
 
-export const getDataFromJSON = async (fileName: string) => {
+export const getDataFromJSON = async (fileName: string): Promise<any[]> => {
   const dir = path.join(
     process.cwd(),
     process.env.JSON_OUTPUT_DIR!,
     `${fileName}.json`
   );
-  console.log("Reading data from JSON file", dir);
+  console.log("--- Reading data from JSON file", dir);
 
   const rawData = fs.readFileSync(dir, "utf8");
 
   if (!rawData) {
-    console.log("Empty data from JSON file", dir);
+    console.log("!!! Empty data from JSON file", dir);
     return [];
   }
   const data = JSON.parse(rawData);
 
-  console.log(data);
+  console.log("--- Get data from", fileName, "data length:", data.length);
 
   return data;
 };

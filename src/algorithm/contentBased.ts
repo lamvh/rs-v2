@@ -1,35 +1,42 @@
-import { getDataByCollection, getDataFromJSON } from "../utils/getData";
+import { getDataFromJSON } from "../utils/getData";
 import { collectionsEnum } from "../types/enum";
+import { json } from "express";
 
 // tslint:disable-next-line: no-var-requires
 const ContentBasedRecommender = require("content-based-recommender");
 
-const limit = 1000;
+const length = 1000;
+const minScore = 0.1;
+const maxSimilarDocuments = 10;
 
 const trainData = async (data: any[]) => {
-  console.log("starting training data");
+  console.log("--- Starting training data ....", data.length + 1);
   const recommender = new ContentBasedRecommender({
-    minScore: 0.1,
-    maxSimilarDocuments: 100,
+    minScore,
+    maxSimilarDocuments,
   });
 
   await recommender.train(data);
+  console.log("--- Trained Data", JSON.stringify(recommender, null, 4));
 
-  const similarDocuments = recommender.getSimilarDocuments("1000002", 0, 10);
+  const similarDocuments = recommender.getSimilarDocuments(data[0].id, 0, 10);
 
-  console.log(similarDocuments);
+  console.log("--- Example data", data[0]);
+  console.log("--- Similar Data", similarDocuments);
+  return similarDocuments;
 };
 
 export const contentBased = async () => {
-  // const data = await getDataFromJSON("calendars");
-  const data = await getDataFromJSON("reviewDetails");
+  const data: any[] = await (
+    await getDataFromJSON(collectionsEnum.reviewDetails)
+  ).slice(1, length);
 
-  const a = await data
-    .slice(1, 1000)
-    .map((row: any) => ({ id: row.id, content: row.comments }));
-  await trainData(a);
+  const processedData: { id: string; content: string }[] = data.map(
+    (row: any) => ({
+      id: row.id,
+      content: row.comments,
+    })
+  );
 
-  // const data = await getDataFromJSON("calendars");
-
-  // await trainData(data);
+  const trained = await trainData(processedData);
 };
