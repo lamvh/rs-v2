@@ -4,3 +4,4 @@
 *.local
 static/json/amsterdam/calendars.json
 static/json/amsterdam/reviewDetails.json
+yarn-error.log
