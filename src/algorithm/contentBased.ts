@@ -1,25 +1,55 @@
 import { getDataFromJSON } from "../utils/getData";
 import { collectionsEnum } from "../types/enum";
-import { json } from "express";
+import path from "path";
+import fs from "fs";
+import lodash from "lodash";
 
 // tslint:disable-next-line: no-var-requires
 const ContentBasedRecommender = require("content-based-recommender");
 
-const length = 1000;
+const length = 10000;
 const minScore = 0.1;
 const maxSimilarDocuments = 10;
 
-const trainData = async (data: any[]) => {
+const OVERWRITE_TRAINED_DATA = process.env.OVERWRITE_TRAINED_DATA;
+
+const trainData = async (data: any[], fileName: string) => {
   console.log("--- Starting training data ....", data.length + 1);
+
+  let similarDocuments;
   const recommender = new ContentBasedRecommender({
     minScore,
     maxSimilarDocuments,
   });
 
-  await recommender.train(data);
-  console.log("--- Trained Data", JSON.stringify(recommender, null, 4));
+  const exportDir = path.join(
+    process.cwd(),
+    process.env.JSON_OUTPUT_TRAINED_DIR!,
+    `${fileName}.json`
+  );
 
-  const similarDocuments = recommender.getSimilarDocuments(data[0].id, 0, 10);
+  if (OVERWRITE_TRAINED_DATA === "true") {
+    console.log("--- Retrain Data .....");
+    await recommender.train(data);
+
+    const exportData = await recommender.export();
+
+    if (exportData) {
+      fs.writeFileSync(exportDir, JSON.stringify(exportData));
+      console.log("--- Exported json", fileName);
+    }
+
+    similarDocuments = await recommender.getSimilarDocuments(data[0].id, 0, 10);
+  } else {
+    const rawData = fs.readFileSync(exportDir, "utf8");
+    if (!rawData) {
+      console.log("!!! EMPTY DATA from", exportDir);
+    }
+    const trainedData = JSON.parse(rawData);
+
+    recommender.import(trainedData);
+    similarDocuments = recommender.getSimilarDocuments(data[0].id, 0, 10);
+  }
 
   console.log("--- Example data", data[0]);
   console.log("--- Similar Data", similarDocuments);
@@ -38,5 +68,23 @@ export const contentBased = async () => {
     })
   );
 
-  const trained = await trainData(processedData);
+  const similarDocuments = await trainData(
+    processedData,
+    collectionsEnum.reviewDetails
+  );
+
+  const mappedData = similarDocuments.map(
+    (document: { id: string; content: string }) => {
+      const rawData = lodash.filter(data, { id: document.id })[0];
+      return {
+        id: document.id,
+        data: {
+          reviewerName: rawData.reviewer_name,
+          comments: rawData.comments,
+        },
+      };
+    }
+  );
+
+  console.log(JSON.stringify(mappedData, null, 2));
 };
