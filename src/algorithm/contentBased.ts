@@ -9,7 +9,7 @@ const ContentBasedRecommender = require("content-based-recommender");
 
 const length = 10000;
 const minScore = 0.1;
-const maxSimilarDocuments = 10;
+const maxSimilarDocuments = 20;
 
 const OVERWRITE_TRAINED_DATA = process.env.OVERWRITE_TRAINED_DATA;
 
@@ -21,7 +21,7 @@ const trainData = async (data: any[], fileName: string) => {
     minScore,
     maxSimilarDocuments,
   });
-
+  const rawDataToGetSimilar = data[20];
   const exportDir = path.join(
     process.cwd(),
     process.env.JSON_OUTPUT_TRAINED_DIR!,
@@ -39,8 +39,13 @@ const trainData = async (data: any[], fileName: string) => {
       console.log("--- Exported json", fileName);
     }
 
-    similarDocuments = await recommender.getSimilarDocuments(data[0].id, 0, 10);
+    similarDocuments = await recommender.getSimilarDocuments(
+      rawDataToGetSimilar.id,
+      0,
+      10
+    );
   } else {
+    console.log("--- Reading trained data from ", fileName);
     const rawData = fs.readFileSync(exportDir, "utf8");
     if (!rawData) {
       console.log("!!! EMPTY DATA from", exportDir);
@@ -48,11 +53,15 @@ const trainData = async (data: any[], fileName: string) => {
     const trainedData = JSON.parse(rawData);
 
     recommender.import(trainedData);
-    similarDocuments = recommender.getSimilarDocuments(data[0].id, 0, 10);
+    similarDocuments = recommender.getSimilarDocuments(
+      rawDataToGetSimilar.id,
+      0,
+      10
+    );
   }
 
   console.log("--- Example data", data[0]);
-  console.log("--- Similar Data", similarDocuments);
+  // console.log("--- Similar Data", similarDocuments);
   return similarDocuments;
 };
 
@@ -78,13 +87,15 @@ export const contentBased = async () => {
       const rawData = lodash.filter(data, { id: document.id })[0];
       return {
         id: document.id,
-        data: {
-          reviewerName: rawData.reviewer_name,
-          comments: rawData.comments,
-        },
+        // data: {
+        //   reviewerName: rawData.reviewer_name,
+        //   comments: rawData.comments,
+        // },
+        reviewerName: rawData.reviewer_name,
+        comments: rawData.comments,
       };
     }
   );
 
-  console.log(JSON.stringify(mappedData, null, 2));
+  console.log("-------------------------------------------", mappedData);
 };
