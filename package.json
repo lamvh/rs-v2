@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
-    "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/server.ts"
+    "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/server.ts",
+    "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/exportJSON.ts",
+    "syncData": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/syncDataToMongoCloud.ts"
   },
   "keywords": [],
   "author": "",
