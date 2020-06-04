@@ -22,12 +22,12 @@ export const getRawDataFromXLSX = async (opt: {
     const wb = xlsx.readFile(fileDir);
     const data = xlsx.utils.sheet_to_json(wb.Sheets[opt.sheetName]);
 
-    console.info("!!! Processed", opt.fileName, "xlsx", data.length, "rows");
-
     if (!data || data.length === 0) {
       console.log("Empty data from excel");
       return [];
     }
+
+    console.info("!!! Processed", opt.fileName, "xlsx", data.length, "rows");
 
     return data;
   } catch (error) {
@@ -55,12 +55,12 @@ export const getRawDataFromCSV = async (opt: {
     const wb = xlsx.readFile(fileDir);
     const data = xlsx.utils.sheet_to_json(wb.Sheets[opt.sheetName]);
 
-    console.info("!!! Processed", opt.fileName, "xlsx", data.length, "rows");
-
     if (!data || data.length === 0) {
       console.log("Empty data from excel");
       return [];
     }
+
+    console.info("!!! Processed", opt.fileName, "xlsx", data.length, "rows");
 
     return data;
   } catch (error) {

@@ -11,7 +11,8 @@ export const getDataByCollection = async (opt: {
     const data = await (await collection(opt.collection)).find().toArray();
 
     if (!data) {
-      console.log("!!! no data");
+      console.log("!!! getDataByCollection: NO DATA");
+      return;
     }
 
     console.log("found ", data.length, "document");
