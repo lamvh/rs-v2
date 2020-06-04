@@ -21,10 +21,10 @@
     "@types/xlsx": "0.0.36",
     "ts-node-dev": "1.0.0-pre.44",
     "tslint": "6.1.2",
-    "typescript": "3.9.3"
+    "typescript": "3.9.3",
+    "@types/lodash": "4.14.155"
   },
   "dependencies": {
-    "@types/lodash": "4.14.155",
     "bluebird": "3.7.2",
     "content-based-recommender": "^1.4.0",
     "dotenv": "8.2.0",

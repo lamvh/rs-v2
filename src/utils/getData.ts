@@ -11,7 +11,7 @@ export const getDataByCollection = async (opt: {
     const data = await (await collection(opt.collection)).find().toArray();
 
     if (!data) {
-      console.log("no data");
+      console.log("!!! no data");
     }
 
     console.log("found ", data.length, "document");
@@ -19,7 +19,7 @@ export const getDataByCollection = async (opt: {
 
     return data;
   } catch (error) {
-    throw error;
+    console.log("!!!!!! getDataByCollection", error);
   }
 };
 

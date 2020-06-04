@@ -66,7 +66,7 @@ const trainData = async (data: any[], fileName: string) => {
 };
 
 export const contentBased = async () => {
-  const data: any[] = await (
+  const data: any[] = (
     await getDataFromJSON(collectionsEnum.reviewDetails)
   ).slice(1, length);
 
@@ -88,7 +88,7 @@ export const contentBased = async () => {
       return {
         id: document.id,
         // data: {
-        //   reviewerName: rawData.reviewer_name,
+        //   reviewerName: 69.reviewer_name,
         //   comments: rawData.comments,
         // },
         reviewerName: rawData.reviewer_name,
