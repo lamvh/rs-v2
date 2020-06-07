@@ -1,6 +1,6 @@
 # Problem
 
-- Gợi ý theo tính từ, chủ nhà, do tính từ bị lặp lại nhiều (amazing, airbnb, greate, experience, ....)
+- Gợi ý theo tính từ, chủ nhà, do tính từ bị lặp lại nhiều (amazing, airbnb, great, experience, ....)
 
 - Tốc độ train data chậm
 
@@ -84,6 +84,8 @@
 ## Collaborative filtering
 
 - `https://www.npmjs.com/package/recommender`
+
+- `https://towardsdatascience.com/various-implementations-of-collaborative-filtering-100385c6dfe0`
 
 # Resource
 
