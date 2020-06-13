@@ -57,7 +57,6 @@
 
 ## Collaborate filtering
 
--
 
 ## Content based
 
@@ -81,11 +80,32 @@
 
 - `https://dev.to/jimatjibba/build-a-content-based-recommendation-engine-in-js-2lpi`
 
+
 ## Collaborative filtering
+
+  ### Problem
+
+    - Memory-based
+
+    - Model-based
+
+    - Hybrid CF algorithms
+
+        - are found helpful to address the sparsity problem, in which external content information can be used to produce predictions for new users or new items.
+
+
+### Library
 
 - `https://www.npmjs.com/package/recommender`
 
+
+### Resource
+
 - `https://towardsdatascience.com/various-implementations-of-collaborative-filtering-100385c6dfe0`
+
+- `https://www.hindawi.com/journals/aai/2009/421425/`
+
+- `https://dl.acm.org/doi/epdf/10.1145/192844.192905` `https://www.hindawi.com/journals/aai/2009/421425/`
 
 # Resource
 
@@ -101,3 +121,10 @@
 
 
 - Javascript Porter Stemmer Online: `http://9ol.es/porter_js_demo.html`
+
+
+# Phân loại văn bản
+
+- `https://www.npmjs.com/package/wordpos`
+
+- `https://github.com/Jordanirabor/nlp-node-natural-article`
