@@ -4,10 +4,12 @@ const natural = require("natural");
 
 const Analyzer = natural.SentimentAnalyzer;
 const stemmer = natural.PorterStemmer;
+
 const analyzer = new Analyzer("English", stemmer, "afinn");
 
 const getSentiment = (array: string[]) => {
   const sentiment = analyzer.getSentiment(array);
+
   console.log("--- Sentiment: ", sentiment);
 
   return sentiment;

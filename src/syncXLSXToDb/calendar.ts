@@ -9,8 +9,8 @@ export const syncCalendarToMongoDBV2 = async () => {
   const col = await collection(collectionName);
 
   const data = await getRawDataFromXLSX({
-    fileName: "calendar",
-    sheetName: "calendar",
+    fileName: "calendars",
+    sheetName: "calendars",
   });
 
   await syncDataToMongoCloudV2(data, col);

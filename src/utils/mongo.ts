@@ -1,13 +1,18 @@
 import mongoose from "mongoose";
+import { collectionsEnum } from "../types/enum";
 
 let database: mongoose.Connection;
 
-export const connect = async (): Promise<mongoose.Connection> => {
-  const uri = process.env.MONGO_URI;
+let uri = process.env.MONGO_LOCAL_URI;
 
+if (process.env.NODE_ENV === "production") {
+  uri = process.env.MONGO_CLOUD_URI;
+}
+
+export const connect = async (): Promise<mongoose.Connection> => {
   if (!uri) {
     console.error("No MONGO_URI config");
-    throw Error("No MONGO_URI config");
+    throw Error("! ! ! No MONGO_URI config");
   }
 
   try {
@@ -20,11 +25,11 @@ export const connect = async (): Promise<mongoose.Connection> => {
 
     database = mongoose.connection;
     database.once("open", async () => {
-      console.info("Connected to database at", uri);
+      console.info("- - - Connected MongoDB");
     });
 
     database.on("error", () => {
-      console.error("Error connecting to database");
+      console.error("! ! ! Error connecting to database");
     });
 
     return database;
@@ -72,7 +77,7 @@ export const collection = async (
 };
 
 export const getDataByCollection = async (opt: {
-  collection: string;
+  collection: collectionsEnum;
   limit?: number;
 }) => {
   const limit = opt.limit ?? 1000000;
@@ -80,8 +85,17 @@ export const getDataByCollection = async (opt: {
   const col = await collection(opt.collection);
 
   const data = col.find().limit(limit).toArray();
+
   if (!data || (await data).length === 0) {
-    return;
+    throw new Error(`!!! Data not found ${opt.collection}`);
   }
+
   return data;
+};
+
+export const getReviewDetailData = async (limit: number = 1000) => {
+  return await getDataByCollection({
+    collection: collectionsEnum.reviewDetails,
+    limit,
+  });
 };

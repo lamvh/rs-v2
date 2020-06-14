@@ -20,11 +20,12 @@
     "@types/mongodb": "3.5.20",
     "@types/mongoose": "5.7.24",
     "@types/xlsx": "0.0.36",
-    "ts-node-dev": "1.0.0-pre.44",
+    "ts-node-dev": "1.0.0-pre.47",
     "tslint": "6.1.2",
     "typescript": "3.9.5"
   },
   "dependencies": {
+    "@maruware/raccoon": "^0.4.1",
     "@types/natural": "^0.6.3",
     "bluebird": "3.7.2",
     "content-based-recommender": "^1.4.0",

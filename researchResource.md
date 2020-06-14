@@ -71,6 +71,14 @@
 
  - natural: `https://www.npmjs.com/package/natural`
 
+- `https://github.com/NaturalNode/natural#stemmers`
+
+- `https://github.com/guymorita/recommendationRaccoon`
+
+- `https://github.com/Jordanirabor/nlp-node-natural-article/blob/master/src/sentiment-analysis/index.js`
+
+- `https://www.npmjs.com/package/@maruware/raccoon`
+
 
 ## Content Based
 
@@ -92,6 +100,10 @@
     - Hybrid CF algorithms
 
         - are found helpful to address the sparsity problem, in which external content information can be used to produce predictions for new users or new items.
+
+    - Multi language in comments
+
+
 
 
 ### Library
