@@ -1,7 +1,7 @@
 import Raccoon from "@maruware/raccoon";
 
 const REDIS_URL = process.env.REDIS_URL;
-const CLASS_NAME = "airbnb";
+const CLASS_NAME = "Recommendation_System";
 
 export const initRedis = async (): Promise<Raccoon> => {
   if (!REDIS_URL) {
