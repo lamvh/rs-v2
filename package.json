@@ -7,11 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
     "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/server.ts",
-    "start:prod": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --transpileOnly ./src/server.ts",
+    "start:prod": "ts-node -r dotenv/config  ./src/server.ts",
     "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/exportJSON.ts",
     "syncData": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/syncDataToMongoCloud.ts",
     "redis:monitor": "redis-cli monitor",
-    "redis:clear": "redis-cli"
+    "redis:clear": " redis-cli FLUSHALL"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +19,11 @@
   "devDependencies": {
     "@types/bluebird": "3.5.32",
     "@types/express": "4.17.6",
-    "@types/lodash": "4.14.155",
-    "@types/mongodb": "3.5.20",
-    "@types/mongoose": "5.7.24",
+    "@types/lodash": "4.14.157",
+    "@types/mongodb": "3.5.25",
+    "@types/mongoose": "5.7.27",
     "@types/xlsx": "0.0.36",
-    "ts-node-dev": "1.0.0-pre.48",
+    "ts-node-dev": "1.0.0-pre.49",
     "tslint": "6.1.2",
     "typescript": "3.9.5"
   },
@@ -36,7 +36,7 @@
     "express": "4.17.1",
     "lodash": "^4.17.15",
     "mongodb": "3.5.9",
-    "mongoose": "5.9.19",
+    "mongoose": "5.9.20",
     "natural": "^2.1.5",
     "raccoon": "^0.2.8",
     "xlsx": "0.16.2"
