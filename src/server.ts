@@ -1,6 +1,6 @@
 import { connect } from "./utils/mongo";
-import runRaccoon from "./raccoon/raccoon";
-import { calSentimentAndUpdateToMongoDB } from "./natural/stemAndSentiment";
+import runRaccoon from "./algorithm/raccoon/raccoon";
+import { calSentimentAndUpdateToMongoDB } from "./algorithm/natural/stemAndSentiment";
 
 const UPDATE_SENTIMENT = false;
 const RUN_RACCOON = true;

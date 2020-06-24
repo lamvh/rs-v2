@@ -1,5 +1,5 @@
-import { collectionsEnum } from "../types/enum";
-import { getRawDataFromXLSX } from "../utils/xlsx";
+import { collectionsEnum } from "../../types/enum";
+import { getRawDataFromXLSX } from "../../utils/xlsx";
 import path from "path";
 import fs from "fs";
 const fileName = collectionsEnum.calendars;

@@ -1,4 +1,4 @@
-import { reviewDetail } from "../types/reviewDetail";
+import { reviewDetail } from "../../types/reviewDetail";
 import Bluebird from "bluebird";
 import { includes } from "lodash";
 

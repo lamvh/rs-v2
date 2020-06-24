@@ -1,7 +1,7 @@
-import { getRawDataFromXLSX } from "../utils/xlsx";
-import { syncDataToMongoCloudV2 } from "../utils/syncData";
-import { collectionsEnum } from "../types/enum";
-import { collection } from "../utils/mongo";
+import { getRawDataFromXLSX } from "../../utils/xlsx";
+import { syncDataToMongoCloudV2 } from "../../utils/syncData";
+import { collectionsEnum } from "../../types/enum";
+import { collection } from "../../utils/mongo";
 
 export const syncCalendarToMongoDBV2 = async () => {
   const collectionName = collectionsEnum.calendars;

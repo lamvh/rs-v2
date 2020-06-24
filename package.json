@@ -8,8 +8,8 @@
     "start": "tsc && node dist/app.js",
     "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/server.ts",
     "start:prod": "ts-node -r dotenv/config  ./src/server.ts",
-    "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/exportJSON.ts",
-    "syncData": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/syncDataToMongoCloud.ts",
+    "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/exportJSON.ts",
+    "syncData": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/syncDataToMongoCloud.ts",
     "redis:monitor": "redis-cli monitor",
     "redis:clear": " redis-cli FLUSHALL"
   },

@@ -1,15 +1,15 @@
 import Raccoon from "@maruware/raccoon";
-import { reviewDetail } from "../types/reviewDetail";
+import { reviewDetail } from "../../types/reviewDetail";
 import {
   getDataByCollection,
   getListingDetailData,
   getReviewDetailData,
-} from "../utils/mongo";
-import { listingDetail } from "../types/listingDetail";
-import { collectionsEnum } from "../types/enum";
+} from "../../utils/mongo";
+import { listingDetail } from "../../types/listingDetail";
+import { collectionsEnum } from "../../types/enum";
 import Bluebird from "bluebird";
 import { includes } from "lodash";
-import { getReviewerIdsFromReviewDetails } from "../reviewDetail/reviewDetail";
+import { getReviewerIdsFromReviewDetails } from "../../data/reviewDetail/reviewDetail";
 
 export const example = async (raccoon: Raccoon) => {
   await raccoon.liked("garyId", "movie2Id");

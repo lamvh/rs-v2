@@ -1,9 +1,9 @@
 import getSentiment from "./sentimentAnalysis";
 import stem from "./stem";
-import { collection, getReviewDetailData } from "../utils/mongo";
-import { collectionsEnum } from "../types/enum";
+import { collection, getReviewDetailData } from "../../utils/mongo";
+import { collectionsEnum } from "../../types/enum";
 import Bluebird from "bluebird";
-import { reviewDetail } from "../types/reviewDetail";
+import { reviewDetail } from "../../types/reviewDetail";
 
 export const getSentimentFromText = async (text: string) => {
   try {
