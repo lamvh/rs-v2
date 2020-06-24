@@ -140,3 +140,24 @@
 - `https://www.npmjs.com/package/wordpos`
 
 - `https://github.com/Jordanirabor/nlp-node-natural-article`
+
+
+# Note
+
+## 16-06-2020
+
+ - Đánh giá sentiment, hiểu thư viện, thuật toán, độ đo,
+
+ - Một user đánh giá bao nhiêu lần,
+
+ - User đánh giá nhiều lần
+
+ - Thư viện raccoon, đưa bộ dữ liệu như thế nào.
+
+ - Bảng độ tương tự, khi đưa dữ liệu vào.
+
+ - Group: 1000 user, 2000 ks, random dữ rating => matrix
+
+ - 200 ks, mỗi user review 50 60 review.
+
+ -
