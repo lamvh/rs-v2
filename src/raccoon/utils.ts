@@ -42,10 +42,10 @@ export const likeOrDislike = async (
           //   review.sentiment,
           //   review.reviewer_name
           // );
-          // await raccoon.liked(
-          //   review.reviewer_id.toString(),
-          //   review.listing_id.toString()
-          // );
+          await raccoon.liked(
+            review.reviewer_id.toString(),
+            review.listing_id.toString()
+          );
           like += 1;
         } else {
           // console.log(
@@ -75,9 +75,14 @@ export const likeOrDislike = async (
   return { review: reviewDetails, listing: listingDetails };
 };
 
-export const getReviewFromListing = async (reviewLimit: number = 300000) => {
-  const listings = await getListingDetailData(20000);
-  const reviews = await getReviewDetailData(reviewLimit);
+export const getReviewFromListing = async (
+  opt: {
+    reviewLimit: number;
+    listingLimit: number;
+  } = { reviewLimit: 300000, listingLimit: 20000 }
+) => {
+  const listings = await getListingDetailData(opt.listingLimit);
+  const reviews = await getReviewDetailData(opt.reviewLimit);
 
   if (!listings) {
     throw new Error("!!! No listings found");
@@ -132,16 +137,44 @@ export const getRecommendForAllUser = async (
         result
       );
     } else {
-      console.log(index, reviewerId);
+      // console.log( '---  Recommend: 'index, reviewerId);
     }
     return Bluebird.delay(0);
   });
 
-  console.log("=============");
+  console.log("=======================");
   console.log("Found", recommendResult.length, "recommend");
   return recommendResult;
 };
 
-export const getMostSimilarUser = async (userId: string, raccoon: Raccoon) => {
+export const getMostSimilarUser = async (
+  userId: string,
+  raccoon: Raccoon
+): Promise<string[]> => {
   return await raccoon.mostSimilarUsers(userId);
+};
+
+export const getMostSimilarUsers = async (
+  userIds: string[],
+  raccoon: Raccoon
+): Promise<any[][]> => {
+  console.log("--- Get most similar user", userIds.length, "users");
+
+  const result: any[] = [];
+
+  await Bluebird.each(userIds, async (userId, index) => {
+    const mostSimilarUser = await getMostSimilarUser(userId, raccoon);
+
+    if (mostSimilarUser && mostSimilarUser.length !== 0) {
+      result.push(mostSimilarUser);
+      console.log("=== Most similar user", userId, ":", mostSimilarUser);
+    } else {
+      console.log(index, userId);
+    }
+  });
+
+  console.log("==============");
+  console.log("Found", result.length, "similar user");
+
+  return result;
 };

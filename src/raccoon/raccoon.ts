@@ -2,17 +2,28 @@ import {
   likeOrDislike,
   getReviewFromListing,
   getRecommendForAllUser,
+  getMostSimilarUsers,
+  getMostSimilarUser,
 } from "./utils";
 import { initRedis } from "../utils/redis";
+import { getUserIdsFromReviewDetails } from "../reviewDetail/reviewDetail";
 
-const RUN_LIKE_OR_DISLIKE = false;
+const REVIEW_LIMIT = 300000;
+const LISTING_LIMIT = 20000;
+
+const RUN_LIKE_OR_DISLIKE = true;
 const GET_RECOMMEND_USER = true;
-
-const REVIEW_LIMIT = 10000;
+const GET_MOST_SIMILAR_USER = true;
 
 export const raccoon = async () => {
   const rac = await initRedis();
-  const reviews = await getReviewFromListing(REVIEW_LIMIT);
+  const reviews = await getReviewFromListing({
+    reviewLimit: REVIEW_LIMIT,
+    listingLimit: LISTING_LIMIT,
+  });
+
+  // console.log(reviews.slice(10));
+  // const userIds = await getUserIdsFromReviewDetails(reviews.slice(10));
 
   if (RUN_LIKE_OR_DISLIKE) {
     await likeOrDislike(rac, reviews);
@@ -22,7 +33,10 @@ export const raccoon = async () => {
     await getRecommendForAllUser(rac, reviews);
   }
 
-  const mostSimillar = await rac.mostSimilarUsers("1377846");
+  if (GET_MOST_SIMILAR_USER) {
+    // await getMostSimilarUsers(userIds, rac);
+    console.log(await rac.mostSimilarUsers("1377846"));
+  }
 };
 
 export default raccoon;

@@ -1,10 +1,6 @@
 import getSentiment from "./sentimentAnalysis";
 import stem from "./stem";
-import {
-  collection,
-  getDataByCollection,
-  getReviewDetailData,
-} from "../utils/mongo";
+import { collection, getReviewDetailData } from "../utils/mongo";
 import { collectionsEnum } from "../types/enum";
 import Bluebird from "bluebird";
 import { reviewDetail } from "../types/reviewDetail";
