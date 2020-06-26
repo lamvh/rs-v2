@@ -11,7 +11,8 @@
     "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/exportJSON.ts",
     "syncData": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/syncDataToMongoCloud.ts",
     "redis:monitor": "redis-cli monitor",
-    "redis:clear": " redis-cli FLUSHALL"
+    "redis:clear": " redis-cli FLUSHALL",
+    "fakeData": "ts-node-dev  -r dotenv/config --respawn --transpileOnly ./src/data/fakeData.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,7 @@
     "@types/express": "4.17.6",
     "@types/lodash": "4.14.157",
     "@types/mongodb": "3.5.25",
-    "@types/mongoose": "5.7.27",
+    "@types/mongoose": "5.7.28",
     "@types/xlsx": "0.0.36",
     "ts-node-dev": "1.0.0-pre.49",
     "tslint": "6.1.2",
