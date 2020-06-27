@@ -1,28 +1,27 @@
-import { collection } from "./mongo";
 import fs from "fs";
 import path from "path";
 
-export const getDataByCollection = async (opt: {
-  collection: string;
-  limit?: number;
-}) => {
-  console.log("Get data from collection", opt.collection);
-  try {
-    const data = await (await collection(opt.collection)).find().toArray();
+// export const getDataByCollection = async (opt: {
+//   collection: string;
+//   limit?: number;
+// }) => {
+//   console.log("Get data from collection", opt.collection);
+//   try {
+//     const data = await (await collection(opt.collection)).find().toArray();
 
-    if (!data) {
-      console.log("!!! getDataByCollection: NO DATA");
-      return;
-    }
+//     if (!data) {
+//       console.log("!!! getDataByCollection: NO DATA");
+//       return;
+//     }
 
-    console.log("found ", data.length, "document");
-    console.log("example", data[0]);
+//     console.log("found ", data.length, "document");
+//     console.log("example", data[0]);
 
-    return data;
-  } catch (error) {
-    console.log("!!!!!! getDataByCollection", error);
-  }
-};
+//     return data;
+//   } catch (error) {
+//     console.log("!!!!!! getDataByCollection", error);
+//   }
+// };
 
 export const getDataFromJSON = async (fileName: string): Promise<any[]> => {
   const dir = path.join(

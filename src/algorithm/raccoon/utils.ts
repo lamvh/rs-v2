@@ -1,15 +1,15 @@
 import Raccoon from "@maruware/raccoon";
 import { reviewDetail } from "../../types/reviewDetail";
-import {
-  getDataByCollection,
-  getListingDetailData,
-  getReviewDetailData,
-} from "../../utils/mongo";
+import { getDataByCollection } from "../../utils/mongo";
 import { listingDetail } from "../../types/listingDetail";
 import { collectionsEnum } from "../../types/enum";
 import Bluebird from "bluebird";
 import { includes } from "lodash";
-import { getReviewerIdsFromReviewDetails } from "../../data/reviewDetail/reviewDetail";
+import {
+  getReviewerIdsFromReviewDetails,
+  getReviewDetailData,
+} from "../../data/review/review";
+import { getListingDetailData } from "../../data/listing/listing";
 
 export const example = async (raccoon: Raccoon) => {
   await raccoon.liked("garyId", "movie2Id");
@@ -92,7 +92,7 @@ export const getReviewFromListing = async (
     throw new Error("!!! No reviews found");
   }
 
-  const listingIds = listings.map((listing) => listing.id.toString());
+  const listingIds = listings.map((listing: any) => listing.id.toString());
 
   const filteredReviews: reviewDetail[] = [];
 

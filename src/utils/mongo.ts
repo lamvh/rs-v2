@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 import { collectionsEnum } from "../types/enum";
-import { reviewDetail } from "../types/reviewDetail";
-import { listingDetail } from "../types/listingDetail";
 
 let database: mongoose.Connection;
 
@@ -66,13 +64,13 @@ export const syncCollection = async (collectionName: string) => {
 };
 
 export const collection = async (
-  collectionName: string
+  collectionName: collectionsEnum
 ): Promise<mongoose.Collection> => {
   const connection = await connect();
   const collectionConnected = connection.collection(collectionName);
 
   if (!collectionConnected) {
-    console.log("Can not connect to", collectionName, "collection");
+    throw new Error(`Can not connect to ${collectionName} collection`);
   }
 
   return collectionConnected;
@@ -93,22 +91,4 @@ export const getDataByCollection = async (opt: {
   }
 
   return data;
-};
-
-export const getReviewDetailData = async (
-  limit: number = 1000
-): Promise<reviewDetail[]> => {
-  return await getDataByCollection({
-    collection: collectionsEnum.reviewDetails,
-    limit,
-  });
-};
-
-export const getListingDetailData = async (
-  limit: number = 1000
-): Promise<listingDetail[]> => {
-  return await getDataByCollection({
-    collection: collectionsEnum.listingDetails,
-    limit,
-  });
 };
