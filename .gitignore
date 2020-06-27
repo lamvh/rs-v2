@@ -2,6 +2,10 @@
 /static/ignore/*
 /dist
 *.local
+
 static/json/amsterdam/calendars.json
 static/json/amsterdam/reviewDetails.json
 yarn-error.log
+
+*.json
+*.xlsx
