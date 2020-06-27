@@ -1,35 +1,131 @@
 //
-// create regular reviewer only (more than 2 reviews)
+// create reviewer
 //
 
 import {
-  getNumberOfReviewByUsers,
+  getUsersWithNumberOfReview,
   getReviewersFromReviewDetails,
+  getReviewers,
 } from "./reviewer/reviewer";
 import { collection } from "../utils/mongo";
 import { collectionsEnum } from "../types/enum";
-import { getReviewDetailData } from "./review/review";
+import { getReviews, getReviewsFromListings } from "./review/review";
+import chalk from "chalk";
+import { reviewDetail } from "../types/reviewDetail";
+import { reviewer } from "../types/reviewer";
+import { listingDetail } from "../types/listingDetail";
+import { getListings } from "./listing/listing";
+import Bluebird from "bluebird";
+import { sample } from "lodash";
 
 const log = console.log;
 
 const createReviewerCollection = async () => {
-  // get data
-  const reviews = await getReviewDetailData();
-  const { regular } = await getReviewersFromReviewDetails();
+  const reviews = await getReviews();
+  const { uniq } = await getReviewersFromReviewDetails();
 
-  // save to db
   const col = await collection(collectionsEnum.reviewers);
 
-  await col.remove({}).then(() => {
-    log(`- - - Removed collection: ${col.name}`);
-  });
-
-  const regularUsers = await getNumberOfReviewByUsers({
+  const users = await getUsersWithNumberOfReview({
     reviews,
-    users: regular,
+    reviewers: uniq,
   });
 
-  await col.insertMany(regularUsers);
+  if (users && users.length > 0) {
+    await col.remove({}).then(() => {
+      log(`- - - Removed collection: ${col.name}`);
+    });
+
+    await col.insertMany(users).then(() => {
+      log(chalk.green("Insert many done"));
+    });
+  }
+};
+// createReviewerCollection();
+
+const createFakeReviewData = async ({
+  reviewers,
+  reviews,
+  listings,
+}: {
+  reviews: reviewDetail[];
+  reviewers: reviewer[];
+  listings: listingDetail[];
+}) => {
+  if (reviews?.length === 0) {
+    throw new Error("Reviews data is empty for fake");
+  }
+
+  if (reviewers?.length === 0) {
+    throw new Error("Reviewers data is empty for fake");
+  }
+
+  if (listings?.length === 0) {
+    throw new Error("Listing data is empty for fake");
+  }
+  const newReviews: reviewDetail[] = [];
+
+  await Bluebird.each(reviewers, async (user, index) => {
+    let count = 0;
+
+    while (count <= 20) {
+      const review = sample(reviews);
+      if (review) {
+        const newReview = { ...review, alt_reviewer_id: user.id };
+        log(
+          index,
+          "/",
+          reviewers.length,
+          "review_id",
+          review.id,
+          "listing_id",
+          review.listing_id,
+          "user_id",
+          user.id
+        );
+        newReviews.push(newReview);
+      }
+      ++count;
+    }
+  });
+  return newReviews;
 };
 
-// createReviewerCollection();
+const LIMIT_LISTING = 1500;
+const LIMIT_USER = 500;
+const LIMIT_REVIEW = 10000; // not effect but more performance
+
+const fake = async () => {
+  const listings = await getListings(LIMIT_LISTING);
+  const reviewers = await getReviewers(LIMIT_USER);
+  const reviews = await getReviewsFromListings({
+    reviews: await getReviews(LIMIT_REVIEW),
+    listings,
+  });
+
+  const fakeReviews = await createFakeReviewData({
+    reviewers,
+    reviews,
+    listings,
+  });
+
+  if (fakeReviews?.length === 0) {
+    throw new Error("Fake data is empty ");
+  }
+
+  log("Found", fakeReviews.length, "review");
+
+  const col = await collection(collectionsEnum.reviewDetails);
+
+  await Bluebird.each(fakeReviews, async (review) => {
+    col.findOneAndUpdate(
+      { _id: review._id },
+      { $set: { alt_reviewer_id: review.alt_reviewer_id } },
+      { upsert: true }
+    );
+  });
+
+  // Todo: only 6462 review update to db with alt_reviewer_id
+};
+
+fake();

@@ -2,6 +2,8 @@ import { collectionsEnum } from "../../types/enum";
 import { getRawDataFromXLSX } from "../../utils/xlsx";
 import path from "path";
 import fs from "fs";
+
+const log = console.log;
 const fileName = collectionsEnum.reviewDetails;
 
 export const exportJSONReview = async () => {
@@ -11,11 +13,13 @@ export const exportJSONReview = async () => {
     process.env.JSON_OUTPUT_DIR!,
     `${fileName}.json`
   );
-  console.log(dir);
+
+  log(dir);
+
   if (data && data.length > 0) {
     fs.writeFileSync(dir, JSON.stringify(data));
-    console.log("Exported json", fileName);
+    log("Exported json", fileName);
   } else {
-    console.log("Empty Data");
+    log("Empty Data");
   }
 };

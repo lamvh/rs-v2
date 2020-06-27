@@ -2,6 +2,8 @@ import { getReviewDetailData } from "../review/review";
 import { uniqBy, difference, sortBy, reverse } from "lodash";
 import { reviewer } from "../../types/reviewer";
 import { reviewDetail } from "../../types/reviewDetail";
+import { collection } from "../../utils/mongo";
+import { collectionsEnum } from "../../types/enum";
 const log = console.log;
 
 export const getReviewersFromReviewDetails = async (): Promise<{
@@ -28,26 +30,33 @@ export const getReviewersFromReviewDetails = async (): Promise<{
   };
 };
 
-export const getNumberOfReviewByUsers = async (opt: {
-  users: reviewer[];
+export const getUsersWithNumberOfReview = async (opt: {
+  reviewers: reviewer[];
   reviews: reviewDetail[];
 }): Promise<reviewer[]> => {
   const reviewers = await Promise.all(
-    opt.users.map(async (user) => {
-      let count = 0;
+    opt.reviewers.map(async (user, index) => {
+      let numberOfReview = 0;
       opt.reviews.forEach((review) => {
         if (review.reviewer_id === user.id) {
-          ++count;
+          ++numberOfReview;
+          log(index, user);
         }
       });
-
-      return { ...user, numberOfReview: count };
+      return { ...user, numberOfReview };
     })
   );
 
-  const sortedReviewers = reverse(sortBy(reviewers, ["numberOfReview"]));
+  const sortedData = reverse(sortBy(reviewers, ["numberOfReview"]));
 
-  return sortedReviewers;
+  return sortedData;
 };
 
-export const fakeData = async () => {};
+export const getReviewers = async (
+  limit: number = 500
+): Promise<reviewer[]> => {
+  return (await collection(collectionsEnum.reviewers))
+    .find()
+    .limit(limit)
+    .toArray();
+};

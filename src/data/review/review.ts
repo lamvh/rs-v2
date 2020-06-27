@@ -3,6 +3,7 @@ import Bluebird from "bluebird";
 import { includes } from "lodash";
 import { collectionsEnum } from "../../types/enum";
 import { getDataByCollection } from "../../utils/mongo";
+import { listingDetail } from "../../types/listingDetail";
 
 export const getReviewerIdsFromReviewDetails = async (
   reviewDetails: reviewDetail[]
@@ -26,11 +27,39 @@ export const getUserIdsFromReviewDetails = async (
   return users;
 };
 
-export const getReviewDetailData = async (
+export const getReviews = async (
   limit: number = 1000000
 ): Promise<reviewDetail[]> => {
   return getDataByCollection({
     collection: collectionsEnum.reviewDetails,
     limit,
   });
+};
+
+export const getReviewsFromListings = async ({
+  reviews,
+  listings,
+}: {
+  reviews: reviewDetail[];
+  listings: listingDetail[];
+}): Promise<reviewDetail[]> => {
+  if (reviews?.length === 0) {
+    throw new Error("Review is empty");
+  }
+
+  if (listings?.length === 0) {
+    throw new Error("Listing is empty");
+  }
+
+  // const filteredReviews: reviewDetail[] = [];
+  const listingIds = listings.map((listing) => listing.id);
+
+  return await Bluebird.each(reviews, async (review) => {
+    if (includes(listingIds, review.listing_id.toString())) {
+      // filteredReviews.push(review);
+      return review;
+    }
+  });
+
+  // return filteredReviews;
 };

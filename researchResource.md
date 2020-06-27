@@ -119,6 +119,12 @@
 
 - `https://dl.acm.org/doi/epdf/10.1145/192844.192905` `https://www.hindawi.com/journals/aai/2009/421425/`
 
+- `https://machinelearningcoban.com/2017/05/31/matrixfactorization/`
+
+- `https://machinelearningcoban.com/2017/05/24/collaborativefiltering/#-lap-trinh-collaborative-filtering-tren-python`
+
+- `https://machinelearningcoban.com/2017/05/17/contentbasedrecommendersys/`
+
 # Resource
 
 - `https://developers.google.com/machine-learning/recommendation/content-based/basics`
@@ -156,8 +162,13 @@
 
  - Bảng độ tương tự, khi đưa dữ liệu vào.
 
- - Group: 1000 user, 2000 ks, random dữ rating => matrix
+ <!-- - Group: 1000 user, 2000 ks, random dữ rating => matrix -->
 
  - 200 ks, mỗi user review 50 60 review.
 
- -
+ - 1500 listings, 500 users, 20 reviews/user => 10000 reviews
+
+
+user =>
+review
+listing
