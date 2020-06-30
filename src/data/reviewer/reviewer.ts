@@ -1,4 +1,4 @@
-import { getReviewDetailData } from "../review/review";
+import { getReviews } from "../review/review";
 import { uniqBy, difference, sortBy, reverse } from "lodash";
 import { reviewer } from "../../types/reviewer";
 import { reviewDetail } from "../../types/reviewDetail";
@@ -11,7 +11,7 @@ export const getReviewersFromReviewDetails = async (): Promise<{
   regular: reviewer[];
   reviewers: reviewer[];
 }> => {
-  const reviewers = (await getReviewDetailData()).map((review) => ({
+  const reviewers = (await getReviews()).map((review) => ({
     id: review.reviewer_id,
     name: review.reviewer_name,
   }));

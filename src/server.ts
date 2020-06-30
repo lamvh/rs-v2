@@ -3,7 +3,7 @@ import runRaccoon from "./algorithm/raccoon/raccoon";
 import { calSentimentAndUpdateToMongoDB } from "./algorithm/natural/stemAndSentiment";
 
 const UPDATE_SENTIMENT = false;
-const RUN_RACCOON = true;
+const RUN_RACCOON = false;
 
 const server = async () => {
   await connect();

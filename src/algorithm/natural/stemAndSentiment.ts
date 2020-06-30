@@ -1,14 +1,15 @@
-import getSentiment from "./sentimentAnalysis";
 import stem from "./stem";
-import { collection, getReviewDetailData } from "../../utils/mongo";
+import { collection } from "../../utils/mongo";
 import { collectionsEnum } from "../../types/enum";
 import Bluebird from "bluebird";
 import { reviewDetail } from "../../types/reviewDetail";
+import { getReviews } from "../../data/review/review";
+import getSentiments from "./sentiment";
 
 export const getSentimentFromText = async (text: string) => {
   try {
     const stemWord = await stem(text);
-    const sentiment = await getSentiment(stemWord);
+    const sentiment = await getSentiments(stemWord);
 
     return sentiment;
   } catch (error) {
@@ -17,7 +18,7 @@ export const getSentimentFromText = async (text: string) => {
 };
 
 export const calculateSentimentFromEachReview = async (limit: number = 10) => {
-  const reviews: reviewDetail[] = await getReviewDetailData(limit);
+  const reviews: reviewDetail[] = await getReviews(limit);
 
   const length = reviews.length;
 

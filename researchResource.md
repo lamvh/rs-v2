@@ -58,6 +58,7 @@
 ## Collaborate filtering
 
 
+
 ## Content based
 
 - Pre-process data: trim html tag, remove stop words and stemming porter.
@@ -99,7 +100,7 @@
 
     - Hybrid CF algorithms
 
-        - are found helpful to address the sparsity problem, in which external content information can be used to produce predictions for new users or new items.
+        - Are found helpful to address the sparsity problem, in which external content information can be used to produce predictions for new users or new items.
 
     - Multi language in comments
 
@@ -137,7 +138,6 @@
 
 - TF-IDF(Term Frequency and Inverse Document Frequency): `https://en.wikipedia.org/wiki/Tf%E2%80%93idf`
 
-
 - Javascript Porter Stemmer Online: `http://9ol.es/porter_js_demo.html`
 
 
@@ -169,6 +169,35 @@
  - 1500 listings, 500 users, 20 reviews/user => 10000 reviews
 
 
-user =>
-review
-listing
+# Lý thuyết
+
+  ## Content Base
+
+  - Dựa vào nội dung cho trước của sản phẩm
+
+
+  ## Collaborative Filtering
+
+    - Neighborhood-based Collaborative Filtering: Dựa vào dữ liệu, hành vi của người dùng, lịch sử của người dùng
+
+    ### User-based CF
+
+    - `https://towardsdatascience.com/intro-to-recommender-system-collaborative-filtering-64a238194a26`
+
+    - Mô tả:
+
+      - khách hàng 1 mua món A, B
+
+      - khách hàng 2 mua món A, B, C
+
+      - Suy ra: khách hàng 1 giống khách hàng 2 => khách hàng 1 có thể thích món hàng C
+
+    ### Item-based CF
+
+    - Mô tả:
+
+      - khách hàng mua món A
+
+      - món hàng A giống món hàng B
+
+      - Suy ra: gợi ý món B cho khách hàng

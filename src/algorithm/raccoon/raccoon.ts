@@ -2,11 +2,8 @@ import {
   likeOrDislike,
   getReviewFromListing,
   getRecommendForAllUser,
-  getMostSimilarUsers,
-  getMostSimilarUser,
 } from "./utils";
 import { initRedis } from "../../utils/redis";
-import { getUserIdsFromReviewDetails } from "../../data/review/review";
 
 const REVIEW_LIMIT = 300000;
 const LISTING_LIMIT = 20000;
