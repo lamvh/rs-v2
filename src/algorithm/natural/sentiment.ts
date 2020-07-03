@@ -28,4 +28,21 @@ const getSentiments = (array: string[]) => {
   return sentiment;
 };
 
+export const convertRatingStarFrom = async (
+  sentiment: number
+): Promise<number> => {
+  let rating = 0;
+  if (sentiment >= 4) rating = 5;
+
+  if (sentiment >= 3 && sentiment < 4) rating = 4;
+
+  if (sentiment >= 2 && sentiment < 3) rating = 3;
+
+  if (sentiment >= 1 && sentiment < 2) rating = 2;
+
+  if (sentiment >= 0 && sentiment < 1) rating = 1;
+
+  return rating;
+};
+
 export default getSentiments;

@@ -1,4 +1,4 @@
-import stem from "./stem";
+import getStem from "./stem";
 import { collection } from "../../utils/mongo";
 import { collectionsEnum } from "../../types/enum";
 import Bluebird from "bluebird";
@@ -8,7 +8,7 @@ import getSentiments from "./sentiment";
 
 export const getSentimentFromText = async (text: string) => {
   try {
-    const stemWord = await stem(text);
+    const stemWord = await getStem(text);
     const sentiment = await getSentiments(stemWord);
 
     return sentiment;
@@ -28,7 +28,7 @@ export const calculateSentimentFromEachReview = async (limit: number = 10) => {
     }
     const sentiment = await getSentimentFromText(review.comments);
 
-    const stemArray = await stem(review.comments);
+    const stemArray = await getStem(review.comments);
 
     const calculated = { ...review, stemArray, sentiment };
 

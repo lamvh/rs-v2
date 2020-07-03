@@ -2,13 +2,25 @@ import { reviewDetail } from "../../types/reviewDetail";
 import Bluebird from "bluebird";
 import { includes } from "lodash";
 import { collectionsEnum } from "../../types/enum";
-import { getDataByCollection } from "../../utils/mongo";
+import { getDataByCollection, collection } from "../../utils/mongo";
 import { listingDetail } from "../../types/listingDetail";
 
 export const getReviewerIdsFromReviewDetails = async (
   reviewDetails: reviewDetail[]
 ): Promise<string[]> => {
   return reviewDetails.map((review) => review.reviewer_id.toString());
+};
+
+export const getReviewsByReviewerId = async ({
+  reviewDetails,
+  reviewerId,
+}: {
+  reviewDetails: reviewDetail[];
+  reviewerId: string;
+}) => {
+  return reviewDetails.filter(
+    (review) => review.alt_reviewer_id === +reviewerId
+  );
 };
 
 export const getUserIdsFromReviewDetails = async (
@@ -34,6 +46,17 @@ export const getReviews = async (
     collection: collectionsEnum.reviewDetails,
     limit,
   });
+};
+
+export const getReviewWithAltReviewerId = async (): Promise<reviewDetail[]> => {
+  const col = await collection(collectionsEnum.reviewDetails);
+  const data = await col.find({ alt_reviewer_id: { $ne: null } }).toArray();
+  if (!data || data.length === 0) {
+    throw new Error("Data is empty");
+  }
+  console.log(`- Found ${data.length} reviews`);
+
+  return data;
 };
 
 export const getReviewsFromListings = async ({

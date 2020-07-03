@@ -171,7 +171,11 @@
 
 # Lý thuyết
 
-  ## Content Base
+  - Có 2 thực thể trong RS là User và Item
+
+  ## Content-Based
+
+  - `https://machinelearningcoban.com/2017/05/17/contentbasedrecommendersys/`
 
   - Dựa vào nội dung cho trước của sản phẩm
 

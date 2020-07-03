@@ -1,6 +1,6 @@
 export type listingDetail = {
   _id: string;
-  id: string;
+  id: number;
   listing_url: string;
   scrape_id: string;
   last_scraped: 43875;

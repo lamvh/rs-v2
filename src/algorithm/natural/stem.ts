@@ -2,7 +2,7 @@ import natural from "natural";
 
 natural.PorterStemmer.attach();
 
-export const stem = async (text: any) => {
+export const getStem = async (text: any) => {
   if (!text) {
     throw new Error(`!!! Undefined text to stem word: ${text}`);
   }
@@ -12,4 +12,4 @@ export const stem = async (text: any) => {
   return stem;
 };
 
-export default stem;
+export default getStem;

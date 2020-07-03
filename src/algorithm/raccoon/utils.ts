@@ -7,9 +7,12 @@ import Bluebird from "bluebird";
 import { includes } from "lodash";
 import {
   getReviewerIdsFromReviewDetails,
-  getReviewDetailData,
+  getReviews,
+  getReviewsByReviewerId,
 } from "../../data/review/review";
-import { getListingDetailData } from "../../data/listing/listing";
+import { getListings } from "../../data/listing/listing";
+
+const log = console.log;
 
 export const example = async (raccoon: Raccoon) => {
   await raccoon.liked("garyId", "movie2Id");
@@ -31,6 +34,7 @@ export const likeOrDislike = async (
 
   await Promise.all(
     reviewDetails.map(async (review) => {
+      const reviewerId = review.alt_reviewer_id ?? review.reviewer_id;
       if (review.sentiment) {
         if (review.sentiment >= 0) {
           // console.log(
@@ -43,7 +47,7 @@ export const likeOrDislike = async (
           //   review.reviewer_name
           // );
           await raccoon.liked(
-            review.reviewer_id.toString(),
+            reviewerId.toString(),
             review.listing_id.toString()
           );
           like += 1;
@@ -58,7 +62,7 @@ export const likeOrDislike = async (
           //   review.reviewer_name
           // );
           await raccoon.disliked(
-            review.reviewer_id.toString(),
+            reviewerId.toString(),
             review.listing_id.toString()
           );
           dislike += 1;
@@ -81,8 +85,9 @@ export const getReviewFromListing = async (
     listingLimit: number;
   } = { reviewLimit: 300000, listingLimit: 20000 }
 ) => {
-  const listings = await getListingDetailData(opt.listingLimit);
-  const reviews = await getReviewDetailData(opt.reviewLimit);
+  const listings = await getListings(opt.listingLimit);
+
+  const reviews = await getReviews(opt.reviewLimit);
 
   if (!listings) {
     throw new Error("!!! No listings found");
@@ -128,16 +133,31 @@ export const getRecommendForAllUser = async (
     const result = await raccoon.recommendFor(reviewerId, 10);
     if (result && result.length !== 0) {
       recommendResult.push(result);
-      console.log(
-        "=== Recommend for",
+
+      log(
+        "------------------------------------------------------------------------------------------"
+      );
+
+      log(
+        "=== Recommend",
         result.length,
-        "reviewerId",
+        "for reviewerId",
         reviewerId,
         ":",
         result
       );
-    } else {
-      // console.log( '---  Recommend: 'index, reviewerId);
+
+      log(
+        "Reviewer",
+        reviewerId,
+        "reviewed hotel",
+        (
+          await getReviewsByReviewerId({ reviewDetails, reviewerId })
+        ).map((review) => ({
+          listing: review.listing_id,
+          sentiment: review.sentiment,
+        }))
+      );
     }
     return Bluebird.delay(0);
   });
