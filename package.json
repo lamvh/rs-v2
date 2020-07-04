@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
-    "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn --transpileOnly ./src/server.ts",
+    "start:dev": "yarn redis:clear && ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn  ./src/server.ts",
     "start:prod": "ts-node -r dotenv/config  ./src/server.ts",
     "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/exportJSON.ts",
     "data:sync": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/syncDataToMongoCloud.ts",
@@ -23,19 +23,21 @@
     "@types/lodash": "4.14.157",
     "@types/mongodb": "3.5.25",
     "@types/mongoose": "5.7.29",
+    "@types/natural": "^0.6.3",
     "@types/xlsx": "0.0.36",
     "ts-node-dev": "1.0.0-pre.49",
     "tslint": "6.1.2",
-    "typescript": "3.9.5",
-    "@types/natural": "^0.6.3"
+    "typescript": "3.9.5"
   },
   "dependencies": {
     "@maruware/raccoon": "^0.4.1",
     "bluebird": "3.7.2",
     "chalk": "^4.1.0",
+    "collaborative-filter": "^1.0.0-beta.1",
     "content-based-recommender": "^1.4.0",
     "dotenv": "8.2.0",
     "express": "4.17.1",
+    "js-recommender": "^1.0.5",
     "lodash": "^4.17.15",
     "mongodb": "3.5.9",
     "mongoose": "5.9.20",

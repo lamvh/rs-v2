@@ -20,7 +20,13 @@ import { sample, remove } from "lodash";
 
 const log = console.log;
 
-const createReviewerCollection = async () => {
+const LIMIT_LISTING = +process.env.LIMIT_LISTING! || 0;
+const LIMIT_USER = +process.env.LIMIT_USER! || 0;
+const LIMIT_REVIEW = +process.env.LIMIT_REVIEW! || 0;
+const LOOP_COUNT = +process.env.LOOP_COUNT! || 1;
+//
+
+export const createReviewerCollection = async () => {
   const reviews = await getReviews();
   const { uniq } = await getReviewersFromReviewDetails();
 
@@ -41,7 +47,6 @@ const createReviewerCollection = async () => {
     });
   }
 };
-// createReviewerCollection();
 
 const createFakeReviewData = async ({
   reviewers,
@@ -68,8 +73,9 @@ const createFakeReviewData = async ({
 
   await Bluebird.each(reviewers, async (user, index) => {
     let count = 0;
-    while (count <= 20) {
-      const listing = sample(listings);
+    const altListings = listings;
+    while (count <= LOOP_COUNT) {
+      const listing = sample(altListings);
       const review = sample(reviews);
       if (review && listing) {
         const newReview = {
@@ -79,21 +85,9 @@ const createFakeReviewData = async ({
         };
 
         remove(reviews, (e) => e.id === review.id);
+        // remove(altListings, (e) => e._id === listing._id);
 
         newReviews.push(newReview);
-
-        log(
-          "---",
-          index,
-          "/",
-          reviewers.length,
-          " generated new review id",
-          review.id,
-          "for user",
-          user.id,
-          "listing_id",
-          review.listing_id
-        );
 
         log(
           "=================== ",
@@ -109,13 +103,13 @@ const createFakeReviewData = async ({
   return newReviews;
 };
 
-const LIMIT_LISTING = 1500;
-const LIMIT_USER = 500;
-const LIMIT_REVIEW = 10000; // not effect but more performance
-
-const UPDATE_FAKE_DATA = false;
+const UPDATE_FAKE_DATA = true;
 
 const fake = async () => {
+  // Fake reviewer_id and listing_id
+  // remove all old fake data
+  // update new fake data
+
   const listings = await getListings(LIMIT_LISTING);
   const reviewers = await getReviewers(LIMIT_USER);
   const reviews = await getReviewsFromListings({
@@ -133,14 +127,15 @@ const fake = async () => {
     listings,
   });
 
-  // if (fakeReviews?.length === 0) {
-  //   throw new Error("Fake data is empty ");
-  // }
-
   log("Found", fakeReviews.length, "review");
 
   if (UPDATE_FAKE_DATA) {
     const col = await collection(collectionsEnum.reviewDetails);
+
+    await col.updateMany(
+      {},
+      { $unset: { alt_reviewer_id: "", alt_listing_id: "" } }
+    );
 
     await Bluebird.each(fakeReviews, async (review) => {
       col.findOneAndUpdate(
@@ -155,8 +150,8 @@ const fake = async () => {
       );
     });
   }
-
-  // Todo: only 6462 review update to db with alt_reviewer_id
 };
 
-fake();
+export const runFakeData = async () => {
+  await fake();
+};

@@ -136,6 +136,8 @@
 
 - Stem Porter Algorithm: `https://tartarus.org/martin/PorterStemmer/`
 
+- Porter Stemmer : `https://tartarus.org/martin/PorterStemmer/def.txt`
+
 - TF-IDF(Term Frequency and Inverse Document Frequency): `https://en.wikipedia.org/wiki/Tf%E2%80%93idf`
 
 - Javascript Porter Stemmer Online: `http://9ol.es/porter_js_demo.html`

@@ -32,45 +32,25 @@ export const likeOrDislike = async (
   let like = 0;
   let dislike = 0;
 
-  await Promise.all(
-    reviewDetails.map(async (review) => {
-      const reviewerId = review.alt_reviewer_id ?? review.reviewer_id;
-      if (review.sentiment) {
-        if (review.sentiment >= 0) {
-          // console.log(
-          //   "like - - -",
-          //   review.reviewer_id,
-          //   "liked",
-          //   review.listing_id,
-          //   "- - - ",
-          //   review.sentiment,
-          //   review.reviewer_name
-          // );
-          await raccoon.liked(
-            reviewerId.toString(),
-            review.listing_id.toString()
-          );
-          like += 1;
-        } else {
-          // console.log(
-          //   "dislike - - -",
-          //   review.reviewer_id,
-          //   "disliked",
-          //   review.listing_id,
-          //   "- - - ",
-          //   review.sentiment,
-          //   review.reviewer_name
-          // );
-          await raccoon.disliked(
-            reviewerId.toString(),
-            review.listing_id.toString()
-          );
-          dislike += 1;
-        }
+  await Bluebird.each(reviewDetails, async (review, index) => {
+    log("- Like/dis", index, "/", reviewDetails.length);
+    const reviewerId = review.alt_reviewer_id ?? review.reviewer_id;
+    if (review.sentiment) {
+      if (review.sentiment >= 0) {
+        await raccoon.liked(
+          reviewerId.toString(),
+          review.listing_id.toString()
+        );
+        ++like;
+      } else {
+        await raccoon.disliked(
+          reviewerId.toString(),
+          review.listing_id.toString()
+        );
+        ++dislike;
       }
-      return Bluebird.delay(300);
-    })
-  );
+    }
+  });
 
   console.log("=== Total review: ", reviewDetails.length);
   console.log("=== Total like: ", like);
@@ -130,7 +110,7 @@ export const getRecommendForAllUser = async (
   const recommendResult: any[] = [];
 
   await Bluebird.each(reviewIds, async (reviewerId, index) => {
-    const result = await raccoon.recommendFor(reviewerId, 10);
+    const result = await raccoon.recommendFor(reviewerId, 25);
     if (result && result.length !== 0) {
       recommendResult.push(result);
 
@@ -151,12 +131,12 @@ export const getRecommendForAllUser = async (
         "Reviewer",
         reviewerId,
         "reviewed hotel",
-        (
-          await getReviewsByReviewerId({ reviewDetails, reviewerId })
-        ).map((review) => ({
-          listing: review.listing_id,
-          sentiment: review.sentiment,
-        }))
+        (await getReviewsByReviewerId({ reviewDetails, reviewerId })).map(
+          (review) => ({
+            listing: review.listing_id,
+            sentiment: review.sentiment,
+          })
+        )
       );
     }
     return Bluebird.delay(0);

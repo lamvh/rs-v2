@@ -1,12 +1,13 @@
-import Raccoon from "@maruware/raccoon";
+const Raccoon = require("../algorithm/raccoon/lib");
 
 const REDIS_URL = process.env.REDIS_URL;
 const CLASS_NAME = "Recommendation_System";
 
-export const initRedis = async (): Promise<Raccoon> => {
+export const initRedis = async (): Promise<typeof Raccoon> => {
   if (!REDIS_URL) {
     throw new Error("!!! REDIS URL not found");
   }
+
   const raccoon = new Raccoon({
     className: CLASS_NAME,
     redisUrl: REDIS_URL,

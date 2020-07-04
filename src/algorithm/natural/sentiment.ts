@@ -23,12 +23,13 @@ const getSentiments = (array: string[]) => {
 
   const sentiment = analyzer.getSentiment(array);
 
-  console.log("--- Sentiment: ", sentiment);
-
+  if (!sentiment) {
+    return -1;
+  }
   return sentiment;
 };
 
-export const convertRatingStarFrom = async (
+export const getRatingStarFromSentiment = async (
   sentiment: number
 ): Promise<number> => {
   let rating = 0;

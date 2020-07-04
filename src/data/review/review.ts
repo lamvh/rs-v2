@@ -50,10 +50,15 @@ export const getReviews = async (
 
 export const getReviewWithAltReviewerId = async (): Promise<reviewDetail[]> => {
   const col = await collection(collectionsEnum.reviewDetails);
-  const data = await col.find({ alt_reviewer_id: { $ne: null } }).toArray();
+  const data = await col
+    .find({ alt_reviewer_id: { $ne: null } })
+    .limit(10000)
+    .toArray();
+
   if (!data || data.length === 0) {
     throw new Error("Data is empty");
   }
+
   console.log(`- Found ${data.length} reviews`);
 
   return data;
@@ -78,7 +83,7 @@ export const getReviewsFromListings = async ({
   const listingIds = listings.map((listing) => listing.id);
 
   return await Bluebird.each(reviews, async (review) => {
-    if (includes(listingIds, review.listing_id.toString())) {
+    if (includes(listingIds, review.listing_id)) {
       // filteredReviews.push(review);
       return review;
     }
