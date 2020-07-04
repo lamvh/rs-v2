@@ -16,7 +16,7 @@ import { reviewer } from "../types/reviewer";
 import { listingDetail } from "../types/listingDetail";
 import { getListings } from "./listing/listing";
 import Bluebird from "bluebird";
-import { sample, remove } from "lodash";
+import { sample, remove, findIndex } from "lodash";
 
 const log = console.log;
 
@@ -85,14 +85,13 @@ const createFakeReviewData = async ({
         };
 
         remove(reviews, (e) => e.id === review.id);
-        // remove(altListings, (e) => e._id === listing._id);
 
         newReviews.push(newReview);
 
         log(
-          "=================== ",
+          "===== create fake data remain ",
           reviews.length,
-          "Reviews",
+          "reviews with",
           listings.length,
           "listings"
         );
@@ -111,6 +110,7 @@ const fake = async () => {
   // update new fake data
 
   const listings = await getListings(LIMIT_LISTING);
+
   const reviewers = await getReviewers(LIMIT_USER);
   const reviews = await getReviewsFromListings({
     reviews: await getReviews(LIMIT_REVIEW),
@@ -129,6 +129,11 @@ const fake = async () => {
 
   log("Found", fakeReviews.length, "review");
 
+  const countListings = listings.map((listing) => ({
+    id: listing.id,
+    count: 0,
+  }));
+
   if (UPDATE_FAKE_DATA) {
     const col = await collection(collectionsEnum.reviewDetails);
 
@@ -138,6 +143,9 @@ const fake = async () => {
     );
 
     await Bluebird.each(fakeReviews, async (review) => {
+      ++countListings[findIndex(countListings, { id: review.alt_listing_id! })]
+        .count;
+
       col.findOneAndUpdate(
         { _id: review._id },
         {
@@ -149,6 +157,8 @@ const fake = async () => {
         { upsert: true }
       );
     });
+
+    console.log(countListings);
   }
 };
 

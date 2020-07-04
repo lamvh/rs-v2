@@ -33,20 +33,42 @@ export const likeOrDislike = async (
   let dislike = 0;
 
   await Bluebird.each(reviewDetails, async (review, index) => {
-    log("- Like/dis", index, "/", reviewDetails.length);
     const reviewerId = review.alt_reviewer_id ?? review.reviewer_id;
-    if (review.sentiment) {
+    if (review.sentiment && review.alt_listing_id) {
       if (review.sentiment >= 0) {
         await raccoon.liked(
           reviewerId.toString(),
-          review.listing_id.toString()
+          review.alt_listing_id.toString()
         );
+
+        log(
+          "- Like",
+          index,
+          "/",
+          reviewDetails.length,
+          "reviewer",
+          review.alt_reviewer_id,
+          "listingId",
+          review.alt_listing_id
+        );
+
         ++like;
       } else {
         await raccoon.disliked(
           reviewerId.toString(),
-          review.listing_id.toString()
+          review.alt_listing_id.toString()
         );
+        log(
+          "- Dislike",
+          index,
+          "/",
+          reviewDetails.length,
+          "reviewer",
+          review.alt_reviewer_id,
+          "listingId",
+          review.alt_listing_id
+        );
+
         ++dislike;
       }
     }
@@ -83,8 +105,8 @@ export const getReviewFromListing = async (
 
   reviews.map(async (review) => {
     if (
-      review.listing_id &&
-      includes(listingIds, review.listing_id.toString())
+      review.alt_listing_id &&
+      includes(listingIds, review.alt_listing_id.toString())
     ) {
       filteredReviews.push(review);
     }
@@ -111,11 +133,12 @@ export const getRecommendForAllUser = async (
 
   await Bluebird.each(reviewIds, async (reviewerId, index) => {
     const result = await raccoon.recommendFor(reviewerId, 25);
+    console.log(reviewerId, result);
     if (result && result.length !== 0) {
       recommendResult.push(result);
 
       log(
-        "------------------------------------------------------------------------------------------"
+        "--------------------------------------------------------------------------------"
       );
 
       log(
@@ -133,7 +156,7 @@ export const getRecommendForAllUser = async (
         "reviewed hotel",
         (await getReviewsByReviewerId({ reviewDetails, reviewerId })).map(
           (review) => ({
-            listing: review.listing_id,
+            listing: review.alt_listing_id,
             sentiment: review.sentiment,
           })
         )

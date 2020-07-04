@@ -8,7 +8,7 @@ import { listingDetail } from "../../types/listingDetail";
 export const getReviewerIdsFromReviewDetails = async (
   reviewDetails: reviewDetail[]
 ): Promise<string[]> => {
-  return reviewDetails.map((review) => review.reviewer_id.toString());
+  return reviewDetails.map((review) => review.alt_reviewer_id!.toString());
 };
 
 export const getReviewsByReviewerId = async ({
@@ -83,7 +83,7 @@ export const getReviewsFromListings = async ({
   const listingIds = listings.map((listing) => listing.id);
 
   return await Bluebird.each(reviews, async (review) => {
-    if (includes(listingIds, review.listing_id)) {
+    if (includes(listingIds, review.alt_listing_id)) {
       // filteredReviews.push(review);
       return review;
     }
