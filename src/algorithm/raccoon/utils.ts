@@ -133,34 +133,30 @@ export const getRecommendForAllUser = async (
 
   await Bluebird.each(reviewIds, async (reviewerId, index) => {
     const result = await raccoon.recommendFor(reviewerId, 25);
-    console.log(reviewerId, result);
+    // console.log(reviewerId, result);
     if (result && result.length !== 0) {
       recommendResult.push(result);
-
-      log(
-        "--------------------------------------------------------------------------------"
-      );
 
       log(
         "=== Recommend",
         result.length,
         "for reviewerId",
-        reviewerId,
-        ":",
-        result
+        reviewerId
+        // ":",
+        // result
       );
 
-      log(
-        "Reviewer",
-        reviewerId,
-        "reviewed hotel",
-        (await getReviewsByReviewerId({ reviewDetails, reviewerId })).map(
-          (review) => ({
-            listing: review.alt_listing_id,
-            sentiment: review.sentiment,
-          })
-        )
-      );
+      // log(
+      //   "Reviewer",
+      //   reviewerId,
+      //   "reviewed hotel",
+      //   (await getReviewsByReviewerId({ reviewDetails, reviewerId })).map(
+      //     (review) => ({
+      //       listing: review.alt_listing_id,
+      //       sentiment: review.sentiment,
+      //     })
+      //   )
+      // );
     }
     return Bluebird.delay(0);
   });
