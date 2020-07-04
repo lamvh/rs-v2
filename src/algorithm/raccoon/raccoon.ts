@@ -2,9 +2,9 @@ import { likeOrDislike, getRecommendForAllUser } from "./utils";
 import { initRedis } from "../../utils/redis";
 import { getReviewWithAltReviewerId } from "../../data/review/review";
 
-const RUN_LIKE_OR_DISLIKE = true;
-const GET_RECOMMEND_USER = true;
-const GET_MOST_SIMILAR_USER = false;
+const RUN_LIKE_OR_DISLIKE = process.env.RUN_LIKE_OR_DISLIKE;
+const GET_RECOMMEND_USER = process.env.GET_RECOMMEND_USER;
+const GET_MOST_SIMILAR_USER = process.env.GET_MOST_SIMILAR_USER;
 
 // Get reviews
 // Run like or dislike
@@ -12,25 +12,22 @@ const GET_MOST_SIMILAR_USER = false;
 
 export const raccoon = async () => {
   const rac = await initRedis();
-
   const reviews = await getReviewWithAltReviewerId();
 
-  if (RUN_LIKE_OR_DISLIKE) {
+  if (RUN_LIKE_OR_DISLIKE === "true") {
     await likeOrDislike(rac, reviews);
   }
 
-  if (GET_RECOMMEND_USER) {
+  if (GET_RECOMMEND_USER === "true") {
     await getRecommendForAllUser(rac, reviews);
   }
 
-  if (GET_MOST_SIMILAR_USER) {
+  if (GET_MOST_SIMILAR_USER === "true") {
     // await getMostSimilarUsers(userIds, rac);
   }
 
-  console.log("Most like", await rac.mostLiked());
-  console.log("Most dislike", await rac.mostDisliked());
-  console.log("Count like 2818", await rac.likedCount("2818"));
-  console.log("Most similar 9181635", await rac.mostSimilarUsers("9181635"));
+  // console.log("Most like", await rac.mostLiked());
+  // console.log("Most dislike", await rac.mostDisliked());
 };
 
 export default raccoon;

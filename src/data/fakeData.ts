@@ -1,7 +1,3 @@
-//
-// create reviewer
-//
-
 import {
   getUsersWithNumberOfReview,
   getReviewersFromReviewDetails,
@@ -24,7 +20,7 @@ const LIMIT_LISTING = +process.env.LIMIT_LISTING! || 0;
 const LIMIT_USER = +process.env.LIMIT_USER! || 0;
 const LIMIT_REVIEW = +process.env.LIMIT_REVIEW! || 0;
 const LOOP_COUNT = +process.env.LOOP_COUNT! || 1;
-//
+const UPDATE_FAKE_DATA = process.env.UPDATE_FAKE_DATA;
 
 export const createReviewerCollection = async () => {
   const reviews = await getReviews();
@@ -102,8 +98,6 @@ const createFakeReviewData = async ({
   return newReviews;
 };
 
-const UPDATE_FAKE_DATA = true;
-
 const fake = async () => {
   // Fake reviewer_id and listing_id
   // remove all old fake data
@@ -134,7 +128,7 @@ const fake = async () => {
     count: 0,
   }));
 
-  if (UPDATE_FAKE_DATA) {
+  if (UPDATE_FAKE_DATA === "true") {
     const col = await collection(collectionsEnum.reviewDetails);
 
     await col.updateMany(
@@ -158,7 +152,7 @@ const fake = async () => {
       );
     });
 
-    console.log(countListings);
+    console.log("--- Listing", countListings);
   }
 };
 

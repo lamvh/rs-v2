@@ -8,7 +8,6 @@ import { includes } from "lodash";
 import {
   getReviewerIdsFromReviewDetails,
   getReviews,
-  getReviewsByReviewerId,
 } from "../../data/review/review";
 import { getListings } from "../../data/listing/listing";
 
@@ -28,6 +27,7 @@ export const likeOrDislike = async (
   const listingDetails: listingDetail[] = await getDataByCollection({
     collection: collectionsEnum.listingDetails,
   });
+  const LOG = process.env.LOG_LIKE_OR_DISLIKE;
 
   let like = 0;
   let dislike = 0;
@@ -41,16 +41,18 @@ export const likeOrDislike = async (
           review.alt_listing_id.toString()
         );
 
-        log(
-          "- Like",
-          index,
-          "/",
-          reviewDetails.length,
-          "reviewer",
-          review.alt_reviewer_id,
-          "listingId",
-          review.alt_listing_id
-        );
+        if (LOG === "true") {
+          log(
+            "- Like",
+            index,
+            "/",
+            reviewDetails.length,
+            "reviewer",
+            review.alt_reviewer_id,
+            "listingId",
+            review.alt_listing_id
+          );
+        }
 
         ++like;
       } else {
@@ -58,16 +60,19 @@ export const likeOrDislike = async (
           reviewerId.toString(),
           review.alt_listing_id.toString()
         );
-        log(
-          "- Dislike",
-          index,
-          "/",
-          reviewDetails.length,
-          "reviewer",
-          review.alt_reviewer_id,
-          "listingId",
-          review.alt_listing_id
-        );
+
+        if (LOG === "true") {
+          log(
+            "- Dislike",
+            index,
+            "/",
+            reviewDetails.length,
+            "reviewer",
+            review.alt_reviewer_id,
+            "listingId",
+            review.alt_listing_id
+          );
+        }
 
         ++dislike;
       }
@@ -133,30 +138,18 @@ export const getRecommendForAllUser = async (
 
   await Bluebird.each(reviewIds, async (reviewerId, index) => {
     const result = await raccoon.recommendFor(reviewerId, 25);
-    // console.log(reviewerId, result);
+
     if (result && result.length !== 0) {
       recommendResult.push(result);
 
       log(
         "=== Recommend",
         result.length,
-        "for reviewerId",
-        reviewerId
-        // ":",
-        // result
+        "hotels for user",
+        reviewerId,
+        ":",
+        result
       );
-
-      // log(
-      //   "Reviewer",
-      //   reviewerId,
-      //   "reviewed hotel",
-      //   (await getReviewsByReviewerId({ reviewDetails, reviewerId })).map(
-      //     (review) => ({
-      //       listing: review.alt_listing_id,
-      //       sentiment: review.sentiment,
-      //     })
-      //   )
-      // );
     }
     return Bluebird.delay(0);
   });
