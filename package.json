@@ -25,9 +25,9 @@
     "@types/mongoose": "5.7.29",
     "@types/natural": "^0.6.3",
     "@types/xlsx": "0.0.36",
-    "ts-node-dev": "1.0.0-pre.49",
+    "ts-node-dev": "1.0.0-pre.50",
     "tslint": "6.1.2",
-    "typescript": "3.9.5"
+    "typescript": "3.9.6"
   },
   "dependencies": {
     "@maruware/raccoon": "^0.4.1",
@@ -40,9 +40,10 @@
     "js-recommender": "^1.0.5",
     "lodash": "^4.17.15",
     "mongodb": "3.5.9",
-    "mongoose": "5.9.20",
+    "mongoose": "5.9.21",
     "natural": "^2.1.5",
     "raccoon": "^0.2.8",
+    "recommender": "^3.0.0",
     "xlsx": "0.16.3"
   }
 }
