@@ -1,0 +1,18 @@
+import { Redis } from 'ioredis';
+export declare const recommendFor: (client: Redis, className: string, userId: string, numberOfRecs: number) => Promise<string[]>;
+export declare const recommendForWithScores: (client: Redis, className: string, userId: string, numberOfRecs: number) => Promise<[string, number][]>;
+export declare const bestRated: (client: Redis, className: string) => Promise<string[]>;
+export declare const worstRated: (client: Redis, className: string) => Promise<string[]>;
+export declare const bestRatedWithScores: (client: Redis, className: string, numOfRatings: number) => Promise<[string, number][]>;
+export declare const mostLiked: (client: Redis, className: string) => Promise<string[]>;
+export declare const mostDisliked: (client: Redis, className: string) => Promise<string[]>;
+export declare const usersWhoLikedAlsoLiked: (client: Redis, className: string, itemId: string) => never;
+export declare const mostSimilarUsers: (client: Redis, className: string, userId: string) => Promise<string[]>;
+export declare const leastSimilarUsers: (client: Redis, className: string, userId: string) => Promise<string[]>;
+export declare const likedBy: (client: Redis, className: string, itemId: string) => Promise<string[]>;
+export declare const likedCount: (client: Redis, className: string, itemId: string) => Promise<number>;
+export declare const dislikedBy: (client: Redis, className: string, itemId: string) => Promise<string[]>;
+export declare const dislikedCount: (client: Redis, className: string, itemId: string) => Promise<number>;
+export declare const allLikedFor: (client: Redis, className: string, userId: string) => Promise<string[]>;
+export declare const allDislikedFor: (client: Redis, className: string, userId: string) => Promise<string[]>;
+export declare const allWatchedFor: (client: Redis, className: string, userId: string) => Promise<string[]>;

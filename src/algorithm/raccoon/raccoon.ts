@@ -1,6 +1,6 @@
 import { likeOrDislike, getRecommendForAllUser } from "./utils";
 import { initRedis } from "../../utils/redis";
-import { getReviewWithAltReviewerId } from "../../data/review/review";
+import { getReviewWithFakedData } from "../../data/review/review";
 
 const RUN_LIKE_OR_DISLIKE = process.env.RUN_LIKE_OR_DISLIKE;
 const GET_RECOMMEND_USER = process.env.GET_RECOMMEND_USER;
@@ -12,7 +12,7 @@ const GET_MOST_SIMILAR_USER = process.env.GET_MOST_SIMILAR_USER;
 
 export const raccoon = async () => {
   const rac = await initRedis();
-  const reviews = await getReviewWithAltReviewerId();
+  const reviews = await getReviewWithFakedData();
 
   if (RUN_LIKE_OR_DISLIKE === "true") {
     await likeOrDislike(rac, reviews);

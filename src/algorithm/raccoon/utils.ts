@@ -1,4 +1,4 @@
-import Raccoon from "@maruware/raccoon";
+import Raccoon from "./lib2/raccoon";
 import { reviewDetail } from "../../types/reviewDetail";
 import { getDataByCollection } from "../../utils/mongo";
 import { listingDetail } from "../../types/listingDetail";
@@ -12,13 +12,6 @@ import {
 import { getListings } from "../../data/listing/listing";
 
 const log = console.log;
-
-export const example = async (raccoon: Raccoon) => {
-  await raccoon.liked("garyId", "movie2Id");
-  await raccoon.liked("chrisId", "movieId");
-  const recs = await raccoon.recommendFor("chrisId", 10);
-  console.log(recs);
-};
 
 export const likeOrDislike = async (
   raccoon: Raccoon,

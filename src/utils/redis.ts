@@ -1,9 +1,9 @@
-const Raccoon = require("../algorithm/raccoon/lib");
+import Raccoon from "../algorithm/raccoon/lib2";
 
 const REDIS_URL = process.env.REDIS_URL;
 const CLASS_NAME = "Recommendation_System";
 
-export const initRedis = async (): Promise<typeof Raccoon> => {
+export const initRedis = async (): Promise<Raccoon> => {
   if (!REDIS_URL) {
     throw new Error("!!! REDIS URL not found");
   }

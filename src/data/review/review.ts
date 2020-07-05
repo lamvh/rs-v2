@@ -48,10 +48,10 @@ export const getReviews = async (
   });
 };
 
-export const getReviewWithAltReviewerId = async (): Promise<reviewDetail[]> => {
+export const getReviewWithFakedData = async (): Promise<reviewDetail[]> => {
   const col = await collection(collectionsEnum.reviewDetails);
   const data = await col
-    .find({ alt_reviewer_id: { $ne: null } })
+    .find({ alt_reviewer_id: { $ne: null }, alt_listing_id: { $ne: null } })
     .limit(10000)
     .toArray();
 

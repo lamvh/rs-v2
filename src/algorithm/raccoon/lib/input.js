@@ -37,6 +37,7 @@ const updateSequence = function (userId, itemId, options = {}) {
 
 const changeRating = function (userId, itemId, options) {
   let updateRecommendations = true;
+
   if ("updateRecs" in options) {
     updateRecommendations = options.updateRecs ? true : false;
   }
