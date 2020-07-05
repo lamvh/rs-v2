@@ -1,5 +1,5 @@
-import { getDataFromJSON } from "../utils/getData";
-import { collectionsEnum } from "../types/enum";
+import { getDataFromJSON } from "../../utils/getData";
+import { collectionsEnum } from "../../types/enum";
 import path from "path";
 import fs from "fs";
 import lodash from "lodash";
