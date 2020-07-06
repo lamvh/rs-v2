@@ -170,16 +170,10 @@
 
  - Bảng độ tương tự, khi đưa dữ liệu vào.
 
- <!-- - Group: 1000 user, 2000 ks, random dữ rating => matrix -->
-
- - 200 ks, mỗi user review 50 60 review.
-
- - 1500 listings, 500 users, 20 reviews/user => 10000 reviews
-
-
 # Lý thuyết
 
   - Có 2 thực thể trong RS là User và Item
+
 
   ## Content-Based
 
@@ -213,3 +207,9 @@
       - món hàng A giống món hàng B
 
       - Suy ra: gợi ý món B cho khách hàng
+
+    ### Các bước thực hiện
+
+      - Normalize ma trận
+
+      - Similarity Function

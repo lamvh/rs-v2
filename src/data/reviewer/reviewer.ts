@@ -4,6 +4,7 @@ import { reviewer } from "../../types/reviewer";
 import { reviewDetail } from "../../types/reviewDetail";
 import { collection } from "../../utils/mongo";
 import { collectionsEnum } from "../../types/enum";
+import Bluebird from "bluebird";
 const log = console.log;
 
 export const getReviewersFromReviewDetails = async (): Promise<{
@@ -11,17 +12,33 @@ export const getReviewersFromReviewDetails = async (): Promise<{
   regular: reviewer[];
   reviewers: reviewer[];
 }> => {
-  const reviewers = (await getReviews()).map((review) => ({
-    id: review.reviewer_id,
-    name: review.reviewer_name,
-  }));
-  log("Found", reviewers.length, "raw");
+  const reviewers: reviewer[] = [];
+
+  // const reviewers = (await getReviews()).map((review) => {
+  //   if (review.alt_reviewer_id) {
+  //     return {
+  //       id: review.alt_listing_id,
+  //       name: review.reviewer_name,
+  //     };
+  //   }
+  // });
+
+  await Bluebird.each(await getReviews(), async (review) => {
+    if (review.alt_reviewer_id) {
+      reviewers.push({
+        id: +review.alt_reviewer_id,
+        name: review.reviewer_name,
+      });
+    }
+  });
+
+  // log("Found", reviewers.length, "raw");
 
   const uniqReviewers = uniqBy(reviewers, "id");
-  log("Found", uniqReviewers.length, "uniq");
+  // log("Found", uniqReviewers.length, "uniq");
 
   const regularlyReviewer = uniqBy(difference(reviewers, uniqReviewers), "id");
-  log("Found", regularlyReviewer.length, "regular");
+  // log("Found", regularlyReviewer.length, "regular");
 
   return {
     reviewers,
