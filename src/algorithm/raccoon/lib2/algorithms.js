@@ -218,8 +218,8 @@ exports.updateRecommendationsFor = async function (
     );
   }
 };
-// the wilson score is a proxy for 'best rated'. it represents the best finding the best ratio of likes and also eliminating
-// outliers. the wilson score is a value between 0 and 1.
+
+// the wilson score is a proxy for 'best rated'. it represents the best finding the best ratio of likes and also eliminating outliers. the wilson score is a value between 0 and 1.
 exports.updateWilsonScore = async function (client, className, itemId) {
   // creating the redis keys for scoreboard and to get the items liked and disliked sets
   const scoreboard = key_1.scoreboardZSetKey(className);

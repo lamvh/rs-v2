@@ -32,6 +32,7 @@
   "dependencies": {
     "@maruware/raccoon": "^0.4.1",
     "@types/ioredis": "^4.17.0",
+    "@types/mathjs": "^6.0.5",
     "bluebird": "3.7.2",
     "chalk": "^4.1.0",
     "collaborative-filter": "^1.0.0-beta.1",
@@ -40,6 +41,7 @@
     "express": "4.17.1",
     "js-recommender": "^1.0.5",
     "lodash": "^4.17.15",
+    "mathjs": "^7.0.2",
     "mongodb": "3.5.9",
     "mongoose": "5.9.21",
     "natural": "^2.1.5",

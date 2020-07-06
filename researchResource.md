@@ -28,6 +28,10 @@
 
 - Matrix homestay - user
 
+- trừ trung bình rating của người dùng
+
+- cold start problem
+
 
 ## Need to do
 
@@ -141,6 +145,8 @@
 - TF-IDF(Term Frequency and Inverse Document Frequency): `https://en.wikipedia.org/wiki/Tf%E2%80%93idf`
 
 - Javascript Porter Stemmer Online: `http://9ol.es/porter_js_demo.html`
+
+- Jaccard Index / Similarity Coefficient: `https://www.statisticshowto.com/jaccard-index#:~:text=The%20Jaccard%20similarity%20index%20(sometimes,more%20similar%20the%20two%20populations.`
 
 
 # Phân loại văn bản
