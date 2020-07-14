@@ -34,13 +34,6 @@ export const raccoon = async () => {
     // await getMostSimilarUsers(userIds, rac);
   }
 
-  // const a = await rac.recommendFor("12574897", 100);
-
-  // log("--- RACCOON for 12574897", a);
-  // [20168, 27886, 42970, 2818, 28871]
-  // ["41125", "28871", "27886", "25428", "31080"]
-  // [27886, 20168, 42970, 2818, 28871];
-
   // console.log("Most like", await rac.mostLiked());
   // console.log("Most dislike", await rac.mostDisliked());
 };
