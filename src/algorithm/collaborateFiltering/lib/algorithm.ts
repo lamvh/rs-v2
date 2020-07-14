@@ -1,3 +1,6 @@
+// https://viblo.asia/p/neighborhood-based-collaborative-filtering-phuong-phap-goi-y-dua-tren-lang-gieng-gan-nhat-p1-4dbZNpvn5YM
+// https://viblo.asia/p/neighborhood-based-collaborative-filtering-phuong-phap-goi-y-dua-tren-lang-gieng-gan-nhat-p2-3Q75wx32KWb
+
 import * as math from "mathjs";
 import {
   typeCheckRating,
@@ -5,6 +8,7 @@ import {
   typeCheckCoOccurrenceMatrix,
   typeCheckUserIndex,
   getRatingItemsForUsers,
+  normalizeCoMatrix,
 } from "./utils";
 
 const ONLY_RECOMMEND_FROM_SIMILAR_TASTE = 1;
@@ -31,8 +35,9 @@ const createCoMatrix = (ratingMatrix: any[]) => {
 
   for (let y = 0; y < userSize; y++) {
     for (let x = 0; x < itemSize - 1; x++) {
-      for (let index = x + 1; index < itemSize; index += 1) {
+      for (let index = x + 1; index < itemSize; index++) {
         // Co-occurrence
+
         if (ratingMatrix[y][x] === 1 && ratingMatrix[y][index] === 1) {
           coMatrix.set([x, index], coMatrix.get([x, index]) + 1);
           coMatrix.set([index, x], coMatrix.get([index, x]) + 1); // mirror
@@ -55,7 +60,13 @@ const createCoMatrix = (ratingMatrix: any[]) => {
     }
   }
 
-  return coMatrix;
+  log("--- Created coMatrix", coMatrix.toArray());
+  log("--- Normalize matrix", normalizerMatrix.toArray());
+
+  // return coMatrix;
+  return NORMALIZE_ON_POPULARITY
+    ? normalizeCoMatrix(coMatrix, normalizerMatrix)
+    : coMatrix;
 };
 
 export const getRecommendations = (
@@ -87,8 +98,8 @@ export const getRecommendations = (
 
   const similarities = math.zeros(numRatedItems, itemSize) as math.Matrix;
 
-  for (let rated = 0; rated < numRatedItems; rated += 1) {
-    for (let item = 0; item < itemSize; item += 1) {
+  for (let rated = 0; rated < numRatedItems; rated++) {
+    for (let item = 0; item < itemSize; item++) {
       similarities.set(
         [rated, item],
         coMatrix.get([ratedItemsForUser[rated], item]) +
@@ -96,23 +107,25 @@ export const getRecommendations = (
       );
     }
   }
-  log("==== Similarities", similarities.toArray());
+  log("==== Similarities matrix", similarities.toArray());
 
   const recommendations = math.zeros(itemSize) as math.Matrix;
-  for (let y = 0; y < numRatedItems; y += 1) {
-    for (let x = 0; x < itemSize; x += 1) {
+
+  for (let y = 0; y < numRatedItems; y++) {
+    for (let x = 0; x < itemSize; x++) {
       recommendations.set(
         [x],
         recommendations.get([x]) + similarities.get([y, x])
       );
     }
   }
-  log("==== Recommendations", recommendations.toArray());
 
-  const recommendation = math.dotDivide(
-    recommendations,
-    numRatedItems
-  ) as math.MathType;
+  log("==== Recommendations matrix", recommendations.toArray());
+
+  // const recommendation = math.dotDivide(
+  //   recommendations,
+  //   numRatedItems
+  // ) as math.MathType;
 
   const rec = recommendations.toArray() as any[];
   let recSorted = recommendations.toArray() as any[];
@@ -125,12 +138,14 @@ export const getRecommendations = (
 
   let recOrder = recSorted.map((element) => {
     const index = rec.indexOf(element);
-    rec[index] = null; // To ensure no duplicate indices in the future iterations.
+    rec[index] = null; // To ensure no duplicate indices
 
     return index;
   });
 
   recOrder = recOrder.filter((index) => !ratedItemsForUser.includes(index));
+
+  log("- - - recOrder", recOrder);
 
   return recOrder;
 };

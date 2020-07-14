@@ -1,9 +1,12 @@
 import * as math from "mathjs";
 import { isEqual, isArray } from "lodash";
 
-export const normalizeMatrix = (matrix: number[][], normalize: number[][]) => {
+export const normalizeCoMatrix = (
+  matrix: math.Matrix,
+  normalize: math.Matrix
+) => {
   // Document of dotDivide: https://mathjs.org/docs/reference/functions/dotDivide.html
-  return math.dotDivide(matrix, normalize);
+  return math.dotDivide(matrix, normalize) as math.Matrix;
 };
 
 export const getRatingItemsForUsers = (

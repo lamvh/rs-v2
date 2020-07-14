@@ -2,6 +2,8 @@ import { likeOrDislike, getRecommendForAllUser } from "./utils";
 import { initRedis } from "../../utils/redis";
 import { getReviewWithFakedData } from "../../data/review/review";
 
+const log = console.log;
+
 const RUN_LIKE_OR_DISLIKE = process.env.RUN_LIKE_OR_DISLIKE;
 const GET_RECOMMEND_USER = process.env.GET_RECOMMEND_USER;
 const GET_MOST_SIMILAR_USER = process.env.GET_MOST_SIMILAR_USER;
@@ -11,6 +13,12 @@ const GET_MOST_SIMILAR_USER = process.env.GET_MOST_SIMILAR_USER;
 // Get all recommend
 
 export const raccoon = async () => {
+  log(
+    "============================================================================",
+    "================================== RACCOON =================================",
+    "============================================================================"
+  );
+
   const rac = await initRedis();
   const reviews = await getReviewWithFakedData();
 
@@ -25,6 +33,13 @@ export const raccoon = async () => {
   if (GET_MOST_SIMILAR_USER === "true") {
     // await getMostSimilarUsers(userIds, rac);
   }
+
+  // const a = await rac.recommendFor("12574897", 100);
+
+  // log("--- RACCOON for 12574897", a);
+  // [20168, 27886, 42970, 2818, 28871]
+  // ["41125", "28871", "27886", "25428", "31080"]
+  // [27886, 20168, 42970, 2818, 28871];
 
   // console.log("Most like", await rac.mostLiked());
   // console.log("Most dislike", await rac.mostDisliked());

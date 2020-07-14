@@ -1,12 +1,6 @@
 # Problem
 
-- Gợi ý theo tính từ, chủ nhà, do tính từ bị lặp lại nhiều (amazing, airbnb, great, experience, ....)
-
-- Tốc độ train data chậm
-
 - Bị trùng lại homestay cũ
-
-- Không thể chạy trên heroku do process quá nặng
 
 - 20k-50k documents
 
@@ -24,13 +18,9 @@
 
 - Không cần tối ưu thuật toán
 
-- Mỗi người đánh giá bao nhiêu lần
+- Trừ trung bình rating của người dùng
 
-- Matrix homestay - user
-
-- trừ trung bình rating của người dùng
-
-- cold start problem
+- Cold start problem
 
 
 ## Need to do
@@ -132,7 +122,7 @@
 
 # Resource
 
-- `https://developers.google.com/machine-learning/recommendation/content-based/basics`
+- Content-based on google: `https://developers.google.com/machine-learning/recommendation/content-based/basics`
 
 - Collaborative filtering: `https://en.wikipedia.org/wiki/Collaborative_filtering`
 
@@ -213,3 +203,11 @@
       - Normalize ma trận
 
       - Similarity Function
+
+  # Viết báo cáo
+
+  - mô tả dữ liệu
+
+  - các
+
+  - báo cáo, ppt, web

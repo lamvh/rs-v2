@@ -13,14 +13,16 @@ export const initRedis = async (): Promise<Raccoon> => {
     redisUrl: REDIS_URL,
   });
 
-  if (!raccoon) {
-    throw new Error(
-      `Can not create Raccoon, className: ${CLASS_NAME} redisUrl: ${REDIS_URL}`
-    );
-  }
+  // if (!raccoon) {
+  //   throw new Error(
+  //     `Can not create Raccoon, className: ${CLASS_NAME} redisUrl: ${REDIS_URL}`
+  //   );
+  // }
 
   console.log("--- RACCOON class name:", CLASS_NAME);
   console.log("--- RACCOON redis:", REDIS_URL);
 
   return raccoon;
 };
+
+export default initRedis;

@@ -13,7 +13,9 @@ export const syncCalendarToMongoDBV2 = async () => {
     sheetName: "calendars",
   });
 
-  await syncDataToMongoCloudV2(data, col);
+  if (data && data.length > 0) {
+    await syncDataToMongoCloudV2(data, col);
+  }
 
   console.log("Calendar Done !");
 };

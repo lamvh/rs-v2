@@ -29,7 +29,8 @@ export const transferDataToMatrix = async () => {
   const { uniq } = await getReviewersFromReviewDetails();
   const reviewerIds = uniq.map((reviewer) => reviewer.id);
 
-  log("-", "found", reviewerIds.length, "reviewer");
+  log("---", "Found", reviewerIds.length, "reviewer");
+  log("--- ReviewerIds", reviewerIds);
 
   console.log(
     "-",
@@ -76,7 +77,7 @@ export const mapRecommendedItemToListingIds = async (recommendIds: any[]) => {
   return await Bluebird.map(recommendIds, (idx) => listings[idx].id);
 };
 
-export const getRecommendAndMapToListingIdByUserIdx = (
+export const getRecommendAndMapToListingIdByUserIdx = async (
   ratings: any[],
   coMatrix: math.Matrix,
   userIdx: number
@@ -86,5 +87,8 @@ export const getRecommendAndMapToListingIdByUserIdx = (
     coMatrix,
     userIdx
   );
-  return mapRecommendedItemToListingIds(recommend);
+  const mapped = await mapRecommendedItemToListingIds(recommend);
+
+  log("--- Recommend for userIdx", userIdx, ":", mapped);
+  return mapped;
 };
