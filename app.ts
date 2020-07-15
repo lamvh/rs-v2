@@ -12,6 +12,7 @@ import {
   getListingsByIds,
 } from "./src/data/listing/listing";
 import server from "./src/server";
+import { getRecommendForUserByCFAlgorithm } from "./src/algorithm/collaborateFiltering/collaborateFiltering";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -72,22 +73,7 @@ app.get("/data/listing", async (req, res, next) => {
   res.send(data);
 });
 
-//
-app.get("/data/raccoon", async (req, res, next) => {
-  const { id } = req.query;
-
-  if (!id) {
-    next();
-  }
-  const rac = await initRedis();
-
-  const recommends: any[] = await rac.recommendFor(id.toString(), 10);
-  const data = await getListingsByIds(recommends);
-
-  // console.log("Request", req.originalUrl, "data", data.length, " recommends");
-  res.send(data);
-});
-
+// RECOMMEND PAGE
 app.get("/data/best", async (req, res, next) => {
   const rac = await initRedis();
   const roomIds = await rac.bestRated();
@@ -103,4 +89,34 @@ app.get("/data/best", async (req, res, next) => {
   }
 });
 
-app.get("/data/cf/");
+// RACCOON
+app.get("/data/raccoon", async (req, res, next) => {
+  const { id } = req.query;
+
+  if (!id) {
+    next();
+  }
+  const rac = await initRedis();
+
+  const recommends: any[] = await rac.recommendFor(id.toString(), 10);
+  const data = await getListingsByIds(recommends);
+
+  // console.log("Request", req.originalUrl, "data", data.length, " recommends");
+  res.send(data);
+});
+
+// CF
+app.get("/data/cf", async (req, res, next) => {
+  const { id } = req.query;
+
+  if (!id) {
+    next();
+  }
+
+  const recommends = await getRecommendForUserByCFAlgorithm(id.toString());
+  const data = await getListingsByIds(
+    recommends.map((recommend) => recommend.toString())
+  );
+
+  res.send(data);
+});
