@@ -18,6 +18,7 @@ const server = async () => {
     await calSentimentAndUpdateToMongoDB(10000);
   }
 
+  // create alt_reviewer_id, alt_listing_id and update to mongodb
   if (FAKE_DATA === "true") {
     console.log("---- Start fake data");
     await runFakeData();

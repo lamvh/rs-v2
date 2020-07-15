@@ -32,17 +32,6 @@ app.get("/data", (req, res, next) => {
   res.send(data);
 });
 
-app.get("/data/raccoon", (req, res, next) => {
-  getReviewWithFakedData().then((reviews) => {
-    initRedis().then((redisRaccoon) =>
-      getRecommendForAllUser(redisRaccoon, reviews).then((data) => {
-        console.log(path.join(baseUrl, "data/raccoon : "), data);
-        res.send(data);
-      })
-    );
-  });
-});
-
 app.get("/data/users", async (req, res, next) => {
   if (!LIMIT_USER) {
     next("no limit user");
@@ -83,48 +72,35 @@ app.get("/data/listing", async (req, res, next) => {
   res.send(data);
 });
 
-app.get("/data/recommend", async (req, res, next) => {
+//
+app.get("/data/raccoon", async (req, res, next) => {
   const { id } = req.query;
-  console.log("id", id);
 
   if (!id) {
     next();
   }
   const rac = await initRedis();
 
-  const data = await rac.recommendFor(id.toString(), 50);
+  const recommends: any[] = await rac.recommendFor(id.toString(), 10);
+  const data = await getListingsByIds(recommends);
 
-  console.log("Request", req.originalUrl, "data");
+  // console.log("Request", req.originalUrl, "data", data.length, " recommends");
   res.send(data);
-});
-
-app.get("/data/recommend/user", async (req, res, next) => {
-  const { id } = req.query;
-  console.log(id);
-  const rac = await initRedis();
-  const data = await rac.recommendFor(id.toString(), 25);
-
-  if (!data) {
-    next();
-  }
-
-  if (data) {
-    console.log("Request", req.originalUrl, "data", data);
-    res.send(data);
-  }
 });
 
 app.get("/data/best", async (req, res, next) => {
   const rac = await initRedis();
   const roomIds = await rac.bestRated();
-  const data = await getListingsByIds(roomIds);
+  const data = await getListingsByIds(roomIds.slice(0, 8));
 
   if (!data) {
     next();
   }
 
   if (data) {
-    console.log("Request", req.originalUrl, "data", data);
+    console.log("Request", req.originalUrl, "data", data.length, "recommends");
     res.send(data);
   }
 });
+
+app.get("/data/cf/");

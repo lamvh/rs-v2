@@ -33,7 +33,7 @@ export const raccoon = async () => {
   if (GET_MOST_SIMILAR_USER === "true") {
     // await getMostSimilarUsers(userIds, rac);
   }
-
+  // console.log("=================", await rac.recommendFor("223397215", 10));
   // console.log("Most like", await rac.mostLiked());
   // console.log("Most dislike", await rac.mostDisliked());
 };
