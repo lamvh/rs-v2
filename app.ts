@@ -3,9 +3,13 @@ import cors from "cors";
 import path from "path";
 import initRedis from "./src/utils/redis";
 import { getRecommendForAllUser } from "./src/algorithm/raccoon/utils";
-import { getReviewWithFakedData } from "./src/data/review/review";
+import {
+  getReviewWithFakedData,
+  getReviewsByListingIds,
+  getReviewsByReviewerIdAPI,
+} from "./src/data/review/review";
 
-import { getReviewers } from "./src/data/reviewer/reviewer";
+import { getReviewers, getReviewerById } from "./src/data/reviewer/reviewer";
 import {
   getListings,
   getListingById,
@@ -118,5 +122,40 @@ app.get("/data/cf", async (req, res, next) => {
     recommends.map((recommend) => recommend.toString())
   );
 
+  res.send(data);
+});
+
+// get all review of listing
+app.get("/data/reviews", async (req, res, next) => {
+  const { roomId: listingId } = req.query;
+  console.log("param", listingId);
+
+  const data = await getReviewsByListingIds(+listingId);
+
+  res.send(data);
+});
+
+// get reviewer by reviewerId
+app.get("/data/reviewer", async (req, res, next) => {
+  const { id } = req.query;
+  if (!id) {
+    next();
+  }
+
+  const data = await getReviewerById(+id);
+
+  res.send(data);
+});
+
+// get add reviews by reviewerId
+app.get("/data/listingsByReviewerId", async (req, res, next) => {
+  const { id } = req.query;
+
+  if (!id) {
+    next();
+  }
+
+  const data = await getReviewsByReviewerIdAPI(+id);
+  console.log(data);
   res.send(data);
 });

@@ -91,3 +91,16 @@ export const getReviewsFromListings = async ({
 
   // return filteredReviews;
 };
+
+export const getReviewsByListingIds = async (id: number) => {
+  const reviews = await (await collection(collectionsEnum.reviewDetails))
+    .find({ alt_listing_id: id })
+    .toArray();
+  return reviews;
+};
+
+export const getReviewsByReviewerIdAPI = async (id: number) => {
+  return (await collection(collectionsEnum.reviewDetails))
+    .find({ alt_reviewer_id: id })
+    .toArray();
+};

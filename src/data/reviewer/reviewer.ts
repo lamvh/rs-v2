@@ -77,3 +77,7 @@ export const getReviewers = async (
     .limit(limit)
     .toArray();
 };
+
+export const getReviewerById = async (id: number) => {
+  return (await collection(collectionsEnum.reviewers)).findOne({ id });
+};
