@@ -27,7 +27,7 @@
     "@types/xlsx": "0.0.36",
     "ts-node-dev": "1.0.0-pre.52",
     "tslint": "6.1.2",
-    "typescript": "3.9.6"
+    "typescript": "3.9.7"
   },
   "dependencies": {
     "@maruware/raccoon": "^0.4.1",
@@ -38,7 +38,7 @@
     "@types/react-dom": "^16.9.8",
     "bluebird": "3.7.2",
     "chalk": "^4.1.0",
-    "collaborative-filter": "^1.0.0-beta.1",
+    "collaborative-filter": "^1.0.0-beta.2",
     "content-based-recommender": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "8.2.0",
@@ -46,7 +46,7 @@
     "js-recommender": "^1.0.5",
     "mathjs": "^7.1.0",
     "mongodb": "3.5.9",
-    "mongoose": "5.9.24",
+    "mongoose": "5.9.25",
     "natural": "^2.1.5",
     "raccoon": "^0.2.8",
     "react": "^16.13.1",
@@ -54,6 +54,6 @@
     "reactjs": "^1.0.0",
     "recommender": "^3.0.0",
     "rex": "^4.17.15",
-    "xlsx": "0.16.3"
+    "xlsx": "0.16.4"
   }
 }
