@@ -148,7 +148,7 @@ app.get("/data/reviewer", async (req, res, next) => {
 });
 
 // get add reviews by reviewerId
-app.get("/data/listingsByReviewerId", async (req, res, next) => {
+app.get("/data/reviewsByReviewerId", async (req, res, next) => {
   const { id } = req.query;
 
   if (!id) {

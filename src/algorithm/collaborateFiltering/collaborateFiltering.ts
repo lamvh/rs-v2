@@ -20,12 +20,12 @@ export const trainData = async () => {
 
   const coMatrix = recommendation.coMatrix(ratings) as math.Matrix;
 
-  // const rec1 = await getRecommendAndMapToListingIdByUserIdx(
-  //   ratings,
-  //   coMatrix,
-  //   1
-  // );
-  // console.log(rec1);
+  const rec1 = await getRecommendAndMapToListingIdByUserIdx(
+    ratings,
+    coMatrix,
+    1
+  );
+  console.log(rec1);
 };
 
 export const getRecommendForUserByCFAlgorithm = async (userId: string) => {

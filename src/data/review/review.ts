@@ -4,6 +4,7 @@ import { includes } from "lodash";
 import { collectionsEnum } from "../../types/enum";
 import { getDataByCollection, collection } from "../../utils/mongo";
 import { listingDetail } from "../../types/listingDetail";
+import { getListingById } from "../listing/listing";
 
 export const getReviewerIdsFromReviewDetails = async (
   reviewDetails: reviewDetail[]
@@ -100,7 +101,16 @@ export const getReviewsByListingIds = async (id: number) => {
 };
 
 export const getReviewsByReviewerIdAPI = async (id: number) => {
-  return (await collection(collectionsEnum.reviewDetails))
+  const reviews = await (await collection(collectionsEnum.reviewDetails))
     .find({ alt_reviewer_id: id })
     .toArray();
+
+  const data: { review: reviewDetail; listing: listingDetail }[] = [];
+
+  await Bluebird.each(reviews, async (item: reviewDetail) => {
+    const listing = await getListingById(item.alt_listing_id!);
+    const row = { listing, review: item };
+    data.push(row);
+  });
+  return data;
 };
