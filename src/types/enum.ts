@@ -6,4 +6,5 @@ export enum collectionsEnum {
   listingDetails = "listingDetails",
   neighbourhoods = "neighbourhoods",
   reviewers = "reviewers",
+  trained = "trained",
 }

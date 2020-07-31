@@ -4,6 +4,8 @@ import {
   getRecommendAndMapToListingIdByUserIdx,
 } from "./utils";
 import { getReviewersFromReviewDetails } from "../../data/reviewer/reviewer";
+import Bluebird from "bluebird";
+// import { trained, trainTypeEnum } from "../../types/trained";
 
 const log = console.log;
 
@@ -46,4 +48,33 @@ export const getRecommendForUserByCFAlgorithm = async (userId: string) => {
     coMatrix,
     userIndex
   );
+};
+
+export const getRecommendForAllUserByCFAlgorithm = async (): Promise<any[]> => {
+  const { uniq } = await getReviewersFromReviewDetails();
+  const reviewerIds = uniq.map((reviewer) => reviewer.id);
+
+  const ratings = await transferDataToMatrix();
+  const coMatrix = recommendation.coMatrix(ratings) as math.Matrix;
+
+  const data: any[] = [];
+  await Bluebird.each(reviewerIds, async (reviewerId, index) => {
+    const result = await getRecommendAndMapToListingIdByUserIdx(
+      ratings,
+      coMatrix,
+      index
+    );
+
+    console.log(result);
+
+    if (result) {
+      data.push({
+        id: reviewerId,
+        recommend: result,
+        type: "cf",
+      });
+    }
+  });
+
+  return data;
 };

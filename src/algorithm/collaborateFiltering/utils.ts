@@ -1,7 +1,4 @@
-import {
-  getReviewWithFakedData,
-  getReviewerIdsFromReviewDetails,
-} from "../../data/review/review";
+import { getReviewWithFakedData } from "../../data/review/review";
 import Bluebird from "bluebird";
 import { getListings } from "../../data/listing/listing";
 import { find } from "lodash";
@@ -12,7 +9,7 @@ const log = console.log;
 const CF_LISTINGS = process.env.CF_LISTINGS;
 
 export const transferDataToMatrix = async () => {
-  log("--- Creating matrix from review data");
+  log("--- Creating matrix from review data / transferDataToMatrix");
 
   if (!CF_LISTINGS) {
     console.log("!!! No LIMIT_LISTING configured");
@@ -89,6 +86,6 @@ export const getRecommendAndMapToListingIdByUserIdx = async (
   );
   const mapped = await mapRecommendedItemToListingIds(recommend);
 
-  log("--- Recommend for userIdx", userIdx, ":", mapped);
+  // log("--- Recommend for userIdx", userIdx, ":", mapped);
   return mapped;
 };

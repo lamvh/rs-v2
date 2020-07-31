@@ -11,6 +11,7 @@
     "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/exportJSON.ts",
     "data:sync": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/syncDataToMongoCloud.ts",
     "data:fake": "ts-node-dev  -r dotenv/config --respawn --transpileOnly ./src/data/fakeData.ts",
+    "data:train":"ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn ./src/data/train/train.ts",
     "redis:monitor": "redis-cli monitor",
     "redis:clear": " redis-cli FLUSHALL"
   },
