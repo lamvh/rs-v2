@@ -1,4 +1,3 @@
-import { connect } from "./utils/mongo";
 import runRaccoon from "./algorithm/raccoon/raccoon";
 import { calSentimentAndUpdateToMongoDB } from "./algorithm/natural/stemAndSentiment";
 import { runFakeData } from "./data/fakeData";
@@ -9,11 +8,7 @@ const FAKE_DATA = process.env.FAKE_DATA;
 const RUN_RACCOON = process.env.RUN_RACCOON;
 const TRAIN_DATA_WITH_CF = process.env.TRAIN_DATA_WITH_CF;
 
-console.log(UPDATE_SENTIMENT, FAKE_DATA, RUN_RACCOON, TRAIN_DATA_WITH_CF);
-
 const server = async () => {
-  await connect();
-
   if (UPDATE_SENTIMENT === "true") {
     await calSentimentAndUpdateToMongoDB(10000);
   }
