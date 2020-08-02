@@ -8,16 +8,16 @@ export const trainAndUpdateTrainDataToMongoDB = async () => {
   // ----- Collaborate Filtering Algorithm ------
   // --------------------------------------------
   const data = await getRecommendForAllUserByCFAlgorithm();
-  console.log(data.length);
-  // updateTrainedDataToMongoDB(data);
+  updateTrainedDataToMongoDB(data);
+  // console.log(data.length);
 
   // ------ Raccoon Algorithm ---------
   // -----------------------------------
-  // const rac = await initRedis();
-  // const reviews = await getReviewWithFakedData();
+  const rac = await initRedis();
+  const reviews = await getReviewWithFakedData();
 
-  // const raccoonData = await getRecommendForAllUser(rac, reviews);
-  // updateTrainedDataToMongoDB(raccoonData);
+  const raccoonData = await getRecommendForAllUser(rac, reviews);
+  updateTrainedDataToMongoDB(raccoonData);
 };
 
 trainAndUpdateTrainDataToMongoDB();
