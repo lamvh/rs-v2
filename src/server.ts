@@ -20,10 +20,12 @@ const server = async () => {
     console.log("- Fake data done !");
   }
 
+  // run raccoon algorithm
   if (RUN_RACCOON === "true") {
     await runRaccoon();
   }
 
+  // run cf algorithm
   if (TRAIN_DATA_WITH_CF === "true") {
     await trainData();
   }
