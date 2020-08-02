@@ -5,12 +5,13 @@ import { getReviewWithFakedData } from "../review/review";
 import { getRecommendForAllUser } from "../../algorithm/raccoon/utils";
 
 export const trainAndUpdateTrainDataToMongoDB = async () => {
+  // --------------------------------------------
   // ----- Collaborate Filtering Algorithm ------
   // --------------------------------------------
   const data = await getRecommendForAllUserByCFAlgorithm();
   updateTrainedDataToMongoDB(data);
-  // console.log(data.length);
 
+  // -----------------------------------
   // ------ Raccoon Algorithm ---------
   // -----------------------------------
   const rac = await initRedis();
