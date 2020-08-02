@@ -133,16 +133,20 @@ export const getRecommendForAllUser = async (
     const result = await raccoon.recommendFor(reviewerId, 25);
 
     if (result && result.length !== 0) {
-      recommendResult.push(result);
+      recommendResult.push({
+        id: +reviewerId,
+        recommend: result.map((rec) => +rec),
+        type: "raccoon",
+      });
 
-      log(
-        "=== Recommend",
-        result.length,
-        "hotels for user",
-        reviewerId,
-        ":",
-        result
-      );
+      // log(
+      //   "=== Recommend",
+      //   result.length,
+      //   "hotels for user",
+      //   reviewerId,
+      //   ":",
+      //   result
+      // );
     }
     return Bluebird.delay(0);
   });

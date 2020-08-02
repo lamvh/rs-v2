@@ -5,6 +5,7 @@ import {
 } from "./utils";
 import { getReviewersFromReviewDetails } from "../../data/reviewer/reviewer";
 import Bluebird from "bluebird";
+import { result } from "lodash";
 // import { trained, trainTypeEnum } from "../../types/trained";
 
 const log = console.log;
@@ -51,6 +52,7 @@ export const getRecommendForUserByCFAlgorithm = async (userId: string) => {
 };
 
 export const getRecommendForAllUserByCFAlgorithm = async (): Promise<any[]> => {
+  console.log("--- Get recommend for all user");
   const { uniq } = await getReviewersFromReviewDetails();
   const reviewerIds = uniq.map((reviewer) => reviewer.id);
 
@@ -76,5 +78,6 @@ export const getRecommendForAllUserByCFAlgorithm = async (): Promise<any[]> => {
     }
   });
 
+  console.log("---- Found", result.length, "recommend user by CF algorithm");
   return data;
 };

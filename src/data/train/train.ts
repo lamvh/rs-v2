@@ -6,16 +6,18 @@ import { getRecommendForAllUser } from "../../algorithm/raccoon/utils";
 
 export const trainAndUpdateTrainDataToMongoDB = async () => {
   // ----- Collaborate Filtering Algorithm ------
-  // const data = await getRecommendForAllUserByCFAlgorithm();
+  // --------------------------------------------
+  const data = await getRecommendForAllUserByCFAlgorithm();
+  console.log(data.length);
   // updateTrainedDataToMongoDB(data);
 
-  // ------ Raccoon Algorithm ------
-  const rac = await initRedis();
-  const reviews = await getReviewWithFakedData();
+  // ------ Raccoon Algorithm ---------
+  // -----------------------------------
+  // const rac = await initRedis();
+  // const reviews = await getReviewWithFakedData();
 
-  const raccoonData = await getRecommendForAllUser(rac, reviews);
-
-  console.log(raccoonData);
+  // const raccoonData = await getRecommendForAllUser(rac, reviews);
+  // updateTrainedDataToMongoDB(raccoonData);
 };
 
 trainAndUpdateTrainDataToMongoDB();

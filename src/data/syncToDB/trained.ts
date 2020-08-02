@@ -33,7 +33,7 @@ export const updateTrainedDataToMongoDB = async (data: any[]) => {
       }
       console.log(error);
     }
-    await Bluebird.delay(100);
+    await Bluebird.delay(50);
   });
 
   console.log("--- Updated trained data");
