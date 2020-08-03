@@ -6,7 +6,6 @@ import {
 import { getReviewersFromReviewDetails } from "../../data/reviewer/reviewer";
 import Bluebird from "bluebird";
 import { result } from "lodash";
-// import { trained, trainTypeEnum } from "../../types/trained";
 
 const log = console.log;
 

@@ -17,6 +17,7 @@ import {
 } from "./src/data/listing/listing";
 import server from "./src/server";
 import { getRecommendForUserByCFAlgorithm } from "./src/algorithm/collaborateFiltering/collaborateFiltering";
+import { getRecommendListingByUserId } from "./src/data/train/train";
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -93,8 +94,10 @@ app.get("/data/best", async (req, res, next) => {
   }
 });
 
+// -------
 // RACCOON
-app.get("/data/raccoon", async (req, res, next) => {
+// -------
+app.get("/data/cal/raccoon", async (req, res, next) => {
   const { id } = req.query;
 
   if (!id) {
@@ -109,8 +112,28 @@ app.get("/data/raccoon", async (req, res, next) => {
   res.send(data);
 });
 
+app.get("/data/trained/raccoon", async (req, res, next) => {
+  const { id } = req.query;
+
+  if (!id) {
+    next();
+  }
+
+  const recommends: number[] = await getRecommendListingByUserId(
+    +id,
+    "raccoon"
+  );
+  const data = await getListingsByIds(
+    recommends.map((recId) => recId.toString())
+  );
+
+  res.send(data);
+});
+
+// -----
 // CF
-app.get("/data/cf", async (req, res, next) => {
+// -----
+app.get("/data/cal/cf", async (req, res, next) => {
   const { id } = req.query;
 
   if (!id) {
@@ -120,6 +143,20 @@ app.get("/data/cf", async (req, res, next) => {
   const recommends = await getRecommendForUserByCFAlgorithm(id.toString());
   const data = await getListingsByIds(
     recommends.map((recommend) => recommend.toString())
+  );
+
+  res.send(data);
+});
+
+app.get("/data/trained/cf", async (req, res, next) => {
+  const { id } = req.query;
+  if (!id) {
+    next();
+  }
+
+  const recommends: number[] = await getRecommendListingByUserId(+id, "cf");
+  const data = await getListingsByIds(
+    recommends.map((recId) => recId.toString())
   );
 
   res.send(data);

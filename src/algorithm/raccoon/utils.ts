@@ -10,6 +10,7 @@ import {
   getReviews,
 } from "../../data/review/review";
 import { getListings } from "../../data/listing/listing";
+import { getReviewersFromReviewDetails } from "../../data/reviewer/reviewer";
 
 const log = console.log;
 
@@ -125,11 +126,13 @@ export const getRecommendForAllUser = async (
   raccoon: Raccoon,
   reviewDetails: reviewDetail[]
 ) => {
-  const reviewIds = await getReviewerIdsFromReviewDetails(reviewDetails);
+  // const reviewIds = await getReviewerIdsFromReviewDetails(reviewDetails);
+  const { uniq } = await getReviewersFromReviewDetails();
+  const reviewerIds = uniq.map((reviewer) => reviewer.id.toString());
 
   const recommendResult: any[] = [];
 
-  await Bluebird.each(reviewIds, async (reviewerId, index) => {
+  await Bluebird.each(reviewerIds, async (reviewerId, index) => {
     const result = await raccoon.recommendFor(reviewerId, 25);
 
     if (result && result.length !== 0) {

@@ -2,6 +2,7 @@ import runRaccoon from "./algorithm/raccoon/raccoon";
 import { calSentimentAndUpdateToMongoDB } from "./algorithm/natural/stemAndSentiment";
 import { runFakeData } from "./data/fakeData";
 import { trainData } from "./algorithm/collaborateFiltering/collaborateFiltering";
+import initRedis from "./utils/redis";
 
 const UPDATE_SENTIMENT = process.env.UPDATE_SENTIMENT;
 const FAKE_DATA = process.env.FAKE_DATA;
@@ -9,6 +10,8 @@ const RUN_RACCOON = process.env.RUN_RACCOON;
 const TRAIN_DATA_WITH_CF = process.env.TRAIN_DATA_WITH_CF;
 
 const server = async () => {
+  await initRedis();
+
   if (UPDATE_SENTIMENT === "true") {
     await calSentimentAndUpdateToMongoDB(10000);
   }

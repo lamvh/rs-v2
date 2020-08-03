@@ -12,7 +12,14 @@ export const updateTrainedDataToMongoDB = async (data: any[]) => {
   const col = await collection(collectionsEnum.trained);
 
   await Bluebird.each(data, async (row, index) => {
-    console.log("updating trained ", index + 1, "/", data.length, row.id);
+    console.log(
+      "updating trained ",
+      index + 1,
+      "/",
+      data.length,
+      row.type,
+      row.id
+    );
 
     try {
       await col.findOneAndUpdate(

@@ -1,4 +1,5 @@
 // Example: https:// github.com/Jordanirabor/nlp-node-natural-article/blob/master/src/sentiment-analysis/index.js
+// Porter Stemming Algorithm: https://tartarus.org/martin/PorterStemmer/index.html
 
 // sentiment max: 4
 // sentiment min: -1

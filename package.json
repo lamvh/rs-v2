@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc && node dist/app.js",
-    "start:dev": "yarn redis:clear && ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn  ./app.ts",
+    "start:dev": "ts-node-dev --max-old-space-size=8192 -r dotenv/config --respawn  ./app.ts",
     "start:prod": "ts-node -r dotenv/config  ./src/server.ts",
     "export:JSON": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/exportJSON.ts",
     "data:sync": "ts-node-dev --max-old-space-size=8192 -r dotenv/config  --transpileOnly ./src/data/exportXLSXToJSON/syncDataToMongoCloud.ts",
